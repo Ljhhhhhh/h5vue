@@ -1,0 +1,208 @@
+@mixin center($width: null, $height: null) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    @if not $width and not $height {
+        transform: translate(-50%, -50%);
+    }
+
+    @else if $width and $height {
+        width: $width;
+        height: $height;
+        margin: -($height / 2) #{0 0} -($width / 2);
+    }
+
+    @else if not $height {
+        width: $width;
+        margin-left: -($width / 2);
+        transform: translateY(-50%);
+    }
+
+    @else {
+        height: $height;
+        margin-top: -($height / 2);
+        transform: translateX(-50%);
+    }
+}
+
+
+
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    $opacity-ie: $opacity * 100;
+    filter: alpha(opacity=$opacity-ie);
+}
+
+@mixin ell() {
+    //
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+//多行超出省略号
+@mixin ell2() {
+    word-break: break-all;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+//.arrow{
+// @include arrow(bottom,10px,#F00);
+//
+@mixin arrow($direction, $size, $color) {
+    width: 0;
+    height: 0;
+    line-height: 0;
+    font-size: 0;
+    overflow: hidden;
+    border-width: $size;
+    cursor: pointer;
+
+    @if $direction==top {
+        border-style: dashed dashed solid dashed;
+        border-color: transparent transparent $color transparent;
+        border-top: none;
+    }
+
+    @else if $direction==bottom {
+        border-style: solid dashed dashed dashed;
+        border-color: $color transparent transparent transparent;
+        border-bottom: none;
+    }
+
+    @else if $direction==right {
+        border-style: dashed dashed dashed solid;
+        border-color: transparent transparent transparent $color;
+        border-right: none;
+    }
+
+    @else if $direction==left {
+        border-style: dashed solid dashed dashed;
+        border-color: transparent $color transparent transparent;
+        border-left: none;
+    }
+}
+
+// clearfix 
+@mixin clr {
+    &:after {
+        clear: both;
+        content: '.';
+        display: block;
+        height: 0;
+        line-height: 0;
+        overflow: hidden;
+    }
+
+    *height: 1%;
+}
+
+/*渐变(从上到下）*/
+@mixin linear-gradient($direction:bottom, $color1:transparent, $color2:#306eff, $color3:transparent) {
+    //background: -webkit-linear-gradient($direction,$colorTop, $colorCenter, $colorBottom); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient($direction, $color1, $color2, $color3);
+    /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient($direction, $color1, $color2, $color3);
+    /* Firefox 3.6 - 15 */
+    background: linear-gradient(to $direction, $color1, $color2, $color3);
+    /* 标准的语法 */
+
+}
+
+/* 行高 */
+@mixin line-height($height:30px, $line-height:30px) {
+    @if ($height !=null) {
+        height: $height;
+    }
+
+    @if ($line-height !=null) {
+        line-height: $line-height;
+    }
+}
+
+/* 定义滚动条样式 圆角和阴影不需要则传入null */
+@mixin scrollBar($width:10px, $height:10px, $outColor:$bgColor, $innerColor:$bgGrey, $radius:5px, $shadow:null) {
+
+    /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+    &::-webkit-scrollbar {
+        width: $width;
+        height: $height;
+        background-color: $outColor;
+    }
+
+    /*定义滚动条轨道 内阴影+圆角*/
+    &::-webkit-scrollbar-track {
+        @if ($shadow !=null) {
+            -webkit-box-shadow: $shadow;
+        }
+
+        @if ($radius !=null) {
+            border-radius: $radius;
+        }
+
+        background-color: $outColor;
+    }
+
+    /*定义滑块 内阴影+圆角*/
+    &::-webkit-scrollbar-thumb {
+        @if ($shadow !=null) {
+            -webkit-box-shadow: $shadow;
+        }
+
+        @if ($radius !=null) {
+            border-radius: $radius;
+        }
+
+        background-color: $innerColor;
+        border: 1px solid $innerColor;
+    }
+}
+
+/* css3动画 默认3s宽度到200px */
+@mixin animation($from:(width:0px), $to:(width:200px), $name:mymove, $animate:mymove 2s 1 linear infinite) {
+    -webkit-animation: $animate;
+    -o-animation: $animate;
+    animation: $animate;
+
+    @keyframes #{$name} {
+        from {
+
+            @each $key,
+            $value in $from {
+                #{$key}: #{$value};
+            }
+        }
+
+        to {
+
+            @each $key,
+            $value in $to {
+                #{$key}: #{$value};
+            }
+        }
+    }
+
+    @-webkit-keyframes #{$name} {
+        from {
+
+            @each $key,
+            $value in $from {
+                $key: $value;
+            }
+        }
+
+        to {
+
+            @each $key,
+            $value in $to {
+                $key: $value;
+            }
+        }
+    }
+}

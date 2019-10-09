@@ -1,0 +1,73 @@
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.clearfix:after {
+  display: block;
+  clear: both;
+  content: "";
+  visibility: hidden;
+  height: 0;
+}
+input,
+button,
+select,
+textarea {
+  outline: none;
+}
+
+/* page change */
+$--transition-time: 350ms;
+.back-enter-active,
+.back-leave-active,
+.forward-enter-active,
+.forward-leave-active {
+  will-change: transform;
+  transition: all $--transition-time;
+  position: absolute;
+  height: 100%;
+  backface-visibility: hidden;
+  perspective: 1000;
+}
+.back-enter {
+  opacity: 0.75;
+  transform: translate3d(-35%, 0, 0) !important;
+}
+.back-enter-active {
+  z-index: -1 !important;
+  transition: all $--transition-time linear;
+}
+.back-leave-active {
+  transform: translate3d(100%, 0, 0) !important;
+  transition: all $--transition-time linear;
+}
+.forward-enter {
+  transform: translate3d(100%, 0, 0) !important;
+}
+.forward-enter-active {
+  transition: all $--transition-time linear;
+}
+.forward-leave-active {
+  z-index: -1;
+  opacity: 0.65;
+  transform: translate3d(-35%, 0, 0) !important;
+  transition: all $--transition-time linear;
+}
+
+.slide-left-leave-active,
+.slide-right-leave-active,
+.slide-left-enter-active,
+.slide-right-enter-active {
+  transition: all $--transition-time;
+}
+.slide-left-enter,
+.slide-right-leave-active {
+  -webkit-transform: translate(100%, 0);
+  transform: translate(100%, 0);
+}
+.slide-left-leave-active,
+.slide-right-enter {
+  -webkit-transform: translate(-100%, 0);
+  transform: translate(-100%, 0);
+}

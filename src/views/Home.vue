@@ -6,6 +6,7 @@
     <van-button type="primary" @click="addOne">主要按钮</van-button>
     <div class="msg">this is msg 我是消息</div>
     <div class="sq"></div>
+    <router-link to="/about">go about</router-link>
   </div>
 </template>
 
