@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     msg: 'hello vuex',
-    loading: false
+    loading: false,
+    direction: 'forward'
   },
   getters: {
     loading (state) {
@@ -20,6 +21,9 @@ export default new Vuex.Store({
     },
     setLoading (state, val) {
       state.loading = val
+    },
+    updateDirection (state, direction) {
+      state.direction = direction
     }
   },
   actions: {

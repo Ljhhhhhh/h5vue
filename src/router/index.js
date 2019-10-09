@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../views/Home.vue'
+import store from '@/store'
 
 Vue.use(Router)
 
@@ -30,7 +31,13 @@ const myRouter = new Router({
   routes
 })
 
+const history = window.sessionStorage
+history.clear()
+let historyCount = history.getItem('count') * 1 || 0
+history.setItem('/', 0)
+
 myRouter.beforeEach((to, from, next) => {
+  console.log(to.params, 'to.params')
   if (to.params.direction) {
     store.commit('updateDirection', to.params.direction)
   } else {
