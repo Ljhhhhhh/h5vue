@@ -4,7 +4,7 @@ module.exports = {
       overrideBrowserslist: ['Android >= 4.0', 'iOS >= 7']
     },
     'postcss-pxtorem': {
-      rootValue: 75,
+      rootValue: 37.5,
       propList: ['*']
     }
   }

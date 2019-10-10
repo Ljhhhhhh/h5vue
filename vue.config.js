@@ -1,4 +1,5 @@
 const isProduction = process.env.NODE_ENV === 'production'
+const port = process.env.port || process.env.npm_config_port || 8888
 
 module.exports = {
   chainWebpack: config => {
@@ -29,12 +30,24 @@ module.exports = {
   // 打包时不生成.map文件
   productionSourceMap: false,
   devServer: {
-    open: true, // 启动服务后是否打开浏览器
-    host: '127.0.0.1',
-    port: 8088, // 服务端口
-    https: false,
-    hotOnly: false,
-    // 设置代理，用来解决本地开发跨域问题，如果设置了代理，那你本地开发环境的axios的baseUrl要写为 '' ，即空字符串
-    proxy: 'https://easy-mock.com/' // 设置代理
+    host: '0.0.0.0',
+    port: port,
+    open: true,
+    overlay: {
+      warnings: false,
+      errors: true
+    },
+    proxy: {
+      // change xxx-api/login => mock/login
+      // detail: https://cli.vuejs.org/config/#devserver-proxy
+      [process.env.VUE_APP_BASE_API]: {
+        target: `http://127.0.0.1:${port}/mock`,
+        changeOrigin: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_API]: ''
+        }
+      }
+    }
+    // after: require('./mock/mock-server.js')
   }
 }

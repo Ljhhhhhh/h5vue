@@ -13,7 +13,7 @@
 <script>
 import { Button, Field } from 'vant'
 import { mapActions, mapMutations, mapGetters } from 'vuex' // createNamespacedHelpers
-
+import service from '@/utils/request'
 // const { mapActions } = createNamespacedHelpers('test')
 
 export default {
@@ -30,6 +30,18 @@ export default {
   computed: {
     ...mapGetters({
       loading: 'loading'
+    })
+  },
+  mounted () {
+    console.log(process.env.NODE_ENV, 'process.env.NODE_ENV', 1+ process.env.VUE_APP_BASE_API, 'process.env.VUE_APP_BASE_API')
+    // service.get('/article/list').then(res => {
+    //   console.log(res, 'regs', process.env.NODE_ENV)
+    // })
+    service({
+      url: '/article/list',
+      method: 'get'
+    }).then(res => {
+      console.log(res, 'regs', process.env.NODE_ENV)
     })
   },
   methods: {
@@ -54,8 +66,8 @@ export default {
     line-height: 24px;
   }
   .sq{
-    width: 630px;
-    height: 75px;
+    width: 315px;
+    height: 40px;
     background: #3a8;
     margin: 0 auto;
   }
