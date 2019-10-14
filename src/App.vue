@@ -37,11 +37,10 @@ export default {
   overflow: hidden !important;
   overflow-y: auto !important;
   -webkit-overflow-scrolling: touch;
-  background: #f0f0f0;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: #f2f2f2;
+  background-color: #fff;
 }
 </style>

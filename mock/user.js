@@ -1,11 +1,7 @@
 
 const tokens = {
-  admin: {
-    token: 'admin-token'
-  },
-  editor: {
-    token: 'editor-token'
-  }
+  '13216698987': 'admin-token',
+  '123456': 'editor-token'
 }
 
 const users = {
@@ -29,8 +25,8 @@ export default [
     url: '/user/login',
     type: 'post',
     response: config => {
-      const { username } = config.body
-      const token = tokens[username]
+      const { phoneNumber } = config.body
+      const token = tokens[phoneNumber]
 
       // mock error
       if (!token) {
@@ -39,10 +35,13 @@ export default [
           message: 'Account and password are incorrect.'
         }
       }
-
+      const info = users[token]
       return {
         code: 200,
-        data: token
+        data: {
+          ...info,
+          token
+        }
       }
     }
   },

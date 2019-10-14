@@ -1,8 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import test from './modules/test'
+// import test from './modules/test'
+// import user from './modules/user'
 
 Vue.use(Vuex)
+
+const files = require.context('./modules', false, /\.js$/)
+const modules = {}
+
+files.keys().forEach(key => {
+  modules[key.replace(/(\.\/|\.js)/g, '')] = files(key).default
+})
+
+// const store = new Vuex.Store({
+//   modules
+// })
 
 export default new Vuex.Store({
   state: {
@@ -29,9 +41,7 @@ export default new Vuex.Store({
   actions: {
 
   },
-  modules: {
-    test
-  }
+  modules
 })
 
 /*
