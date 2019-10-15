@@ -1,8 +1,9 @@
-import { login } from 'api/user'
+import { login, getInfo } from 'api/user'
 import { Toast } from 'vant'
 import { getToken, setToken } from '@/utils/auth'
 
 const LOGIN = 'LOGIN'// 获取用户信息
+const SetUserData = 'SetUserData'// 获取用户信息
 
 export default {
   namespaced: true,
@@ -15,9 +16,14 @@ export default {
     [LOGIN] (state, data) {
       let userDate = data.data
       state.token = userDate.token
-      state.user = userDate
+      // state.user = userDate
       setToken(userDate.token)
       // localStorage.setItem('token', userDate.token)
+      // localStorage.setItem('userDate', JSON.stringify(userDate))
+    },
+    [SetUserData] (state, data) {
+      let userDate = data.data
+      state.user = userDate
       localStorage.setItem('userDate', JSON.stringify(userDate))
     }
 
@@ -43,6 +49,36 @@ export default {
         }, 3000)
       } catch (error) {
       }
+    },
+    // get user info
+    getInfo ({ commit, state }) {
+      return new Promise((resolve, reject) => {
+        getInfo(state.token).then(response => {
+          const { data } = response
+
+          if (!data) {
+            // eslint-disable-next-line
+            reject('Verification failed, please Login again.')
+          }
+
+          // const { roles, name, avatar, introduction } = data
+
+          // // roles must be a non-empty array
+          // if (!roles || roles.length <= 0) {
+          //   // eslint-disable-next-line
+          //   reject('getInfo: roles must be a non-null array!')
+          // }
+
+          // commit('SET_ROLES', roles)
+          // commit('SET_NAME', name)
+          // commit('SET_AVATAR', avatar)
+          // commit('SET_INTRODUCTION', introduction)
+          commit(SetUserData, data)
+          resolve(data)
+        }).catch(error => {
+          reject(error)
+        })
+      })
     }
   },
   getters: {

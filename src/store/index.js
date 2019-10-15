@@ -25,6 +25,10 @@ export default new Vuex.Store({
   getters: {
     loading (state) {
       return state.loading
+    },
+    userData (state, getters) {
+      return state.user.user
+      // return getters['user/user']
     }
     // vuex 全局getters引入局部
     // token () {
