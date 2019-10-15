@@ -1,12 +1,13 @@
 import { login } from 'api/user'
 import { Toast } from 'vant'
+import { getToken, setToken } from '@/utils/auth'
 
 const LOGIN = 'LOGIN'// 获取用户信息
 
 export default {
   namespaced: true,
   state: {
-    token: localStorage.getItem('token') || '',
+    token: getToken() || '',
     user: JSON.parse(localStorage.getItem('userDate')) || {}
   },
   mutations: {
@@ -15,7 +16,8 @@ export default {
       let userDate = data.data
       state.token = userDate.token
       state.user = userDate
-      localStorage.setItem('token', userDate.token)
+      setToken(userDate.token)
+      // localStorage.setItem('token', userDate.token)
       localStorage.setItem('userDate', JSON.stringify(userDate))
     }
 

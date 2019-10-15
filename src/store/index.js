@@ -26,6 +26,10 @@ export default new Vuex.Store({
     loading (state) {
       return state.loading
     }
+    // vuex 全局getters引入局部
+    // token () {
+    //   return store.getters['user/token']
+    // }
   },
   mutations: {
     setMsg (state, msg) {

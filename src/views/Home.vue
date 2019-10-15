@@ -6,6 +6,7 @@
     <van-button type="primary" @click="addOne">主要按钮</van-button>
     <div class="msg">this is msg 我是消息</div>
     <div class="sq"></div>
+    <svg-icon icon-class="user" class-name="eye"></svg-icon>
     <router-link to="/about">go about</router-link>
   </div>
 </template>
@@ -14,6 +15,7 @@
 import { Button, Field } from 'vant'
 import { mapActions, mapMutations, mapGetters } from 'vuex' // createNamespacedHelpers
 import service from '@/utils/request'
+import SvgIcon from 'components/SvgIcon'
 // const { mapActions } = createNamespacedHelpers('test')
 
 export default {
@@ -25,7 +27,8 @@ export default {
   },
   components: {
     [Button.name]: Button,
-    [Field.name]: Field
+    [Field.name]: Field,
+    SvgIcon
   },
   computed: {
     ...mapGetters({
@@ -33,7 +36,6 @@ export default {
     })
   },
   mounted () {
-    console.log(process.env.NODE_ENV, 'process.env.NODE_ENV', 1+ process.env.VUE_APP_BASE_API, 'process.env.VUE_APP_BASE_API')
     // service.get('/article/list').then(res => {
     //   console.log(res, 'regs', process.env.NODE_ENV)
     // })

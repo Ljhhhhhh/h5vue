@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import 'lib-flexible'
 import App from './App.vue'
-import router from './router'
-import store from './store'
+import router from '@/router'
+import store from '@/store'
+import 'utils/permission'
+import '@/icons' // icon
 import { mockXHR } from '../mock'
 import '@/style/common.scss'
 
