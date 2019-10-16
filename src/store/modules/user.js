@@ -1,30 +1,35 @@
 import { login, getInfo } from 'api/user'
 import { Toast } from 'vant'
-import { getToken, setToken } from '@/utils/auth'
+import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const LOGIN = 'LOGIN'// 获取用户信息
 const SetUserData = 'SetUserData'// 获取用户信息
+const LOGOUT = 'LOGOUT'// 退出登录、清除用户数据
+const USER_DATA = 'userDate'// 用户数据
 
 export default {
   namespaced: true,
   state: {
     token: getToken() || '',
-    user: JSON.parse(localStorage.getItem('userDate')) || {}
+    user: JSON.parse(localStorage.getItem(USER_DATA) || null)
   },
   mutations: {
 
     [LOGIN] (state, data) {
       let userDate = data.data
       state.token = userDate.token
-      // state.user = userDate
       setToken(userDate.token)
-      // localStorage.setItem('token', userDate.token)
-      // localStorage.setItem('userDate', JSON.stringify(userDate))
     },
-    [SetUserData] (state, data) {
-      let userDate = data.data
-      state.user = userDate
-      localStorage.setItem('userDate', JSON.stringify(userDate))
+
+    [SetUserData] (state, userData = {}) {
+      state.user = userData
+      localStorage.setItem(USER_DATA, JSON.stringify(userData))
+    },
+    [LOGOUT] (state) {
+      state.user = null
+      state.token = null
+      removeToken()
+      localStorage.removeItem(USER_DATA)
     }
 
   },
@@ -60,19 +65,6 @@ export default {
             // eslint-disable-next-line
             reject('Verification failed, please Login again.')
           }
-
-          // const { roles, name, avatar, introduction } = data
-
-          // // roles must be a non-empty array
-          // if (!roles || roles.length <= 0) {
-          //   // eslint-disable-next-line
-          //   reject('getInfo: roles must be a non-null array!')
-          // }
-
-          // commit('SET_ROLES', roles)
-          // commit('SET_NAME', name)
-          // commit('SET_AVATAR', avatar)
-          // commit('SET_INTRODUCTION', introduction)
           commit(SetUserData, data)
           resolve(data)
         }).catch(error => {
@@ -86,7 +78,6 @@ export default {
       return state.token
     },
     user (state) {
-      console.log('state', state)
       return state.user
     }
   }

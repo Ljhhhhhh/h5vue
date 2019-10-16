@@ -26,8 +26,8 @@ router.beforeEach(async (to, from, next) => {
       next({ path: '/' })
       // NProgress.done()
     } else {
-      const hasGetUserInfo = store.getters.userData.name
-      console.log(hasGetUserInfo)
+      const hasGetUserInfo = store.getters.userData && store.getters.userData.name
+      console.log('hasGetUserInfo', hasGetUserInfo)
       if (hasGetUserInfo) {
         next()
       } else {
@@ -38,7 +38,8 @@ router.beforeEach(async (to, from, next) => {
           next()
         } catch (error) {
           // remove token and go to login page to re-login
-          await store.dispatch('user/resetToken')
+          // await store.dispatch('user/resetToken')
+          store.commit('user/LOGOUT')
           Notify.error(error || 'Has Error')
           next(`/login?redirect=${to.path}`)
           // NProgress.done()
