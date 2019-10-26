@@ -680,6 +680,32 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@better-scroll/core@^2.0.0-beta.2":
+  version "2.0.0-beta.2"
+  resolved "https://registry.npm.taobao.org/@better-scroll/core/download/@better-scroll/core-2.0.0-beta.2.tgz#72c4da63a543671ef7b19c97c3d86b226643b65e"
+  integrity sha1-csTaY6VDZx73sZyXw9hrImZDtl4=
+  dependencies:
+    "@better-scroll/shared-utils" "^2.0.0-beta.2"
+
+"@better-scroll/pull-down@^2.0.0-beta.2":
+  version "2.0.0-beta.2"
+  resolved "https://registry.npm.taobao.org/@better-scroll/pull-down/download/@better-scroll/pull-down-2.0.0-beta.2.tgz#4e5c30df49d8717a8b240b98c005b8b1ad5fa8a6"
+  integrity sha1-Tlww30nYcXqLJAuYwAW4sa1fqKY=
+  dependencies:
+    "@better-scroll/core" "^2.0.0-beta.2"
+
+"@better-scroll/pull-up@^2.0.0-beta.2":
+  version "2.0.0-beta.2"
+  resolved "https://registry.npm.taobao.org/@better-scroll/pull-up/download/@better-scroll/pull-up-2.0.0-beta.2.tgz#a352a97e328d803ed3a19b711c9acb35c977fadc"
+  integrity sha1-o1KpfjKNgD7ToZtxHJrLNcl3+tw=
+  dependencies:
+    "@better-scroll/core" "^2.0.0-beta.2"
+
+"@better-scroll/shared-utils@^2.0.0-beta.2":
+  version "2.0.0-beta.2"
+  resolved "https://registry.npm.taobao.org/@better-scroll/shared-utils/download/@better-scroll/shared-utils-2.0.0-beta.2.tgz#1714d5e46eb47f03ce293f620672e84d5cdb6ca9"
+  integrity sha1-FxTV5G60fwPOKT9iBnLoTVzbbKk=
+
 "@hapi/address@2.x.x":
   version "2.1.2"
   resolved "https://registry.npm.taobao.org/@hapi/address/download/@hapi/address-2.1.2.tgz#1c794cd6dbf2354d1eb1ef10e0303f573e1c7222"
@@ -2719,6 +2745,11 @@ date-now@^0.1.4:
   version "0.1.4"
   resolved "https://registry.npm.taobao.org/date-now/download/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
   integrity sha1-6vQ5/U1ISK105cx9vvIAZyueNFs=
+
+dayjs@^1.8.16:
+  version "1.8.16"
+  resolved "https://registry.npm.taobao.org/dayjs/download/dayjs-1.8.16.tgz#2a3771de537255191b947957af2fd90012e71e64"
+  integrity sha1-Kjdx3lNyVRkblHlXry/ZABLnHmQ=
 
 de-indent@^1.0.2:
   version "1.0.2"
@@ -8621,6 +8652,11 @@ vary@~1.1.2:
   resolved "https://registry.npm.taobao.org/vary/download/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
+vconsole@^3.3.4:
+  version "3.3.4"
+  resolved "https://registry.npm.taobao.org/vconsole/download/vconsole-3.3.4.tgz#a7dacd8887b3d3e902e8d18425cda56c34e77f51"
+  integrity sha1-p9rNiIez0+kC6NGEJc2lbDTnf1E=
+
 vendors@^1.0.0:
   version "1.0.3"
   resolved "https://registry.npm.taobao.org/vendors/download/vendors-1.0.3.tgz#a6467781abd366217c050f8202e7e50cc9eef8c0"
@@ -8639,6 +8675,24 @@ vm-browserify@^1.0.1:
   version "1.1.0"
   resolved "https://registry.npm.taobao.org/vm-browserify/download/vm-browserify-1.1.0.tgz#bd76d6a23323e2ca8ffa12028dc04559c75f9019"
   integrity sha1-vXbWojMj4sqP+hICjcBFWcdfkBk=
+
+vo-pages@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.npm.taobao.org/vo-pages/download/vo-pages-1.0.8.tgz#81ddd4373d12fd7b4f033c2e2c2cc3bd711dab87"
+  integrity sha1-gd3UNz0S/XtPAzwuLCzDvXEdq4c=
+  dependencies:
+    "@better-scroll/core" "^2.0.0-beta.2"
+    "@better-scroll/pull-down" "^2.0.0-beta.2"
+    "@better-scroll/pull-up" "^2.0.0-beta.2"
+    core-js "^2.6.5"
+    vue "^2.6.10"
+    vue-class-component "^7.0.2"
+    vue-property-decorator "^8.1.0"
+
+vue-class-component@^7.0.2, vue-class-component@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.npm.taobao.org/vue-class-component/download/vue-class-component-7.1.0.tgz#b33efcb10e17236d684f70b1e96f1946ec793e87"
+  integrity sha1-sz78sQ4XI21oT3Cx6W8ZRux5Poc=
 
 vue-eslint-parser@^2.0.3:
   version "2.0.3"
@@ -8685,6 +8739,13 @@ vue-loader@^15.7.0:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-property-decorator@^8.1.0:
+  version "8.3.0"
+  resolved "https://registry.npm.taobao.org/vue-property-decorator/download/vue-property-decorator-8.3.0.tgz?cache=0&sync_timestamp=1571289520041&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-property-decorator%2Fdownload%2Fvue-property-decorator-8.3.0.tgz#536f027dc7d626f37c8d85a2dc02f0a6cb979440"
+  integrity sha1-U28CfcfWJvN8jYWi3ALwpsuXlEA=
+  dependencies:
+    vue-class-component "^7.1.0"
+
 vue-router@^3.0.3:
   version "3.1.3"
   resolved "https://registry.npm.taobao.org/vue-router/download/vue-router-3.1.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-router%2Fdownload%2Fvue-router-3.1.3.tgz#e6b14fabc0c0ee9fda0e2cbbda74b350e28e412b"
@@ -8716,10 +8777,10 @@ vue@^2.6.10:
   resolved "https://registry.npm.taobao.org/vue/download/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
   integrity sha1-pysaQqTYKnIepDjRtr9V5mGVxjc=
 
-vuex@^3.0.1:
-  version "3.1.1"
-  resolved "https://registry.npm.taobao.org/vuex/download/vuex-3.1.1.tgz#0c264bfe30cdbccf96ab9db3177d211828a5910e"
-  integrity sha1-DCZL/jDNvM+Wq52zF30hGCilkQ4=
+vuex@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npm.taobao.org/vuex/download/vuex-3.1.0.tgz#634b81515cf0cfe976bd1ffe9601755e51f843b9"
+  integrity sha1-Y0uBUVzwz+l2vR/+lgF1XlH4Q7k=
 
 watchpack@^1.6.0:
   version "1.6.0"

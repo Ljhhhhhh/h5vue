@@ -1,6 +1,8 @@
 import { login, getInfo } from 'api/user'
 import { Toast } from 'vant'
 import { getToken, setToken, removeToken } from '@/utils/auth'
+import { resetRouter } from '@/router'
+// import router from '@/router'
 
 const LOGIN = 'LOGIN'// 获取用户信息
 const SetUserData = 'SetUserData'// 获取用户信息
@@ -16,9 +18,9 @@ export default {
   mutations: {
 
     [LOGIN] (state, data) {
-      let userDate = data.data
-      state.token = userDate.token
-      setToken(userDate.token)
+      let userToken = data.data
+      state.token = userToken
+      setToken(userToken)
     },
 
     [SetUserData] (state, userData = {}) {
@@ -30,6 +32,7 @@ export default {
       state.token = null
       removeToken()
       localStorage.removeItem(USER_DATA)
+      resetRouter()
     }
 
   },
@@ -44,14 +47,14 @@ export default {
         Toast({
           message: '登录成功',
           position: 'middle',
-          duration: 2000
+          duration: 1500
         })
         setTimeout(() => {
           const redirect = data.$route.query.redirect || '/'
           data.$router.replace({
             path: redirect
           })
-        }, 3000)
+        }, 1500)
       } catch (error) {
       }
     },

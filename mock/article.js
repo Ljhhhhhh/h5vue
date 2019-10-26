@@ -30,9 +30,9 @@ for (let i = 0; i < count; i++) {
 export default [
   {
     url: '/article/list',
-    type: 'get',
+    type: 'post',
     response: config => {
-      const { importance, type, title, page = 1, limit = 20, sort } = config.query
+      const { importance, type, title, page = 1, pageSize = 20, sort } = config.body
 
       let mockList = List.filter(item => {
         if (importance && item.importance !== +importance) return false
@@ -45,7 +45,7 @@ export default [
         mockList = mockList.reverse()
       }
 
-      const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      const pageList = mockList.filter((item, index) => index < pageSize * page && index >= pageSize * (page - 1))
 
       return {
         code: 200,

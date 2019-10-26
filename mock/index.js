@@ -2,11 +2,13 @@ import Mock from 'mockjs'
 import { param2Obj } from '../src/utils'
 
 import user from './user'
+import role from './role'
 import article from './article'
 import search from './remote-search'
 
 const mocks = [
   ...user,
+  ...role,
   ...article,
   ...search
 ]
@@ -63,6 +65,7 @@ const responseFake = (url, type, respond) => {
   }
 }
 
-export default mocks.map(route => {
+const d = mocks.map(route => {
   return responseFake(route.url, route.type, route.response)
 })
+export default d

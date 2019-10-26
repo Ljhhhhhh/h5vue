@@ -14,6 +14,15 @@ let routes = [
       title: '首页',
       keepAlive: true
     }
+  },
+  {
+    path: '/404',
+    name: '404',
+    component: () => import(/* webpackChunkName: "404" */ 'views/404.vue'),
+    meta: {
+      title: '404',
+      keepAlive: true
+    }
   }
 ]
 
@@ -29,11 +38,26 @@ routerContext.keys().forEach(route => {
    */
   routes = routes.concat(routerModule.default || routerModule)
 })
-const myRouter = new Router({
-  mode: 'history',
+
+routes = routes.concat({
+  path: '*',
+  redirect: '/home'
+})
+
+const createRouter = () => new Router({
+  mode: 'history', // require service support
   base: process.env.BASE_URL,
+  scrollBehavior: () => ({ y: 0 }),
   routes
 })
+
+const myRouter = createRouter()
+
+// const myRouter = new Router({
+//   mode: 'history',
+//   base: process.env.BASE_URL,
+//   routes
+// })
 
 const history = window.sessionStorage
 history.clear()
@@ -41,7 +65,6 @@ let historyCount = history.getItem('count') * 1 || 0
 history.setItem('/', 0)
 
 myRouter.beforeEach((to, from, next) => {
-  console.log(to.params, 'to.params')
   if (to.params.direction) {
     store.commit('updateDirection', to.params.direction)
   } else {
@@ -63,5 +86,9 @@ myRouter.beforeEach((to, from, next) => {
   }
   next()
 })
+
+export function resetRouter () {
+  myRouter.replace('/login')
+}
 
 export default myRouter

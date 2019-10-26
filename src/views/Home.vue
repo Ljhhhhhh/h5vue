@@ -1,49 +1,79 @@
 <template>
   <div class="home">
-    <div>{{$store.state.test.number}}</div>
-    <van-field v-model="value" placeholder="请输入用户名" />
-    <van-button type="info" :loading="loading" @click="add">异步+1</van-button>
-    <van-button type="primary" @click="addOne">主要按钮</van-button>
-    <div class="msg">this is msg 我是消息</div>
-    <div class="sq"></div>
-    <svg-icon icon-class="user" class-name="eye"></svg-icon>
-    <router-link to="/about">go about</router-link>
+    <div class="banner">
+      <van-swipe :autoplay="3000">
+        <van-swipe-item v-for="(image, index) in images"
+                        :key="index">
+          <img v-lazy="image" />
+        </van-swipe-item>
+      </van-swipe>
+    </div>
+
+    <div class="now-value">
+      <span>当前数值{{$store.state.test.number}}</span>
+      <div>
+        <van-button type="info"
+                    @click="add"
+                    :loading="loading"
+                    size="small">异步+1</van-button>
+        <van-button type="primary"
+                    size="small"
+                    @click="addOne">+1</van-button>
+      </div>
+    </div>
+    <div class="icon-list">
+      <svg-icon v-for="icon in iconList" :key="icon" class="icon" :icon-class="icon" />
+    </div>
+    <div class="buttons">
+      <van-button type="warning" @click="logout">退出登录</van-button>
+      <router-link to="/404"><svg-icon icon-class="404"/>前往404页面</router-link>
+    </div>
+    <footer-tabbar/>
   </div>
 </template>
 
 <script>
-import { Button, Field } from 'vant'
-import { mapActions, mapMutations, mapGetters } from 'vuex' // createNamespacedHelpers
-import service from '@/utils/request'
-import SvgIcon from 'components/SvgIcon'
-// const { mapActions } = createNamespacedHelpers('test')
+import { Button, Tabbar, TabbarItem, Swipe, SwipeItem } from 'vant'
+import { mapActions, mapMutations, mapState } from 'vuex' // createNamespacedHelpers
+import FooterTabbar from 'components/FooterTabbar'
+// const { mapActions } = createNamespacedHelpers('test') // 可使用这种方式直接获得test模板
 
 export default {
   name: 'home',
   data () {
     return {
-      value: 1
+      value: 1,
+      images: [
+        'https://img.yzcdn.cn/vant/apple-1.jpg',
+        'https://img.yzcdn.cn/vant/apple-2.jpg'
+      ],
+      iconList: [
+        'dashboard',
+        'example',
+        'eye-open',
+        'eye',
+        'form',
+        'link',
+        'nested',
+        'password',
+        'table',
+        'tree',
+        'user',
+        '404'
+      ]
     }
   },
   components: {
     [Button.name]: Button,
-    [Field.name]: Field,
-    SvgIcon
+    [Tabbar.name]: Tabbar,
+    [TabbarItem.name]: TabbarItem,
+    [Swipe.name]: Swipe,
+    [SwipeItem.name]: SwipeItem,
+    FooterTabbar
   },
   computed: {
-    ...mapGetters({
-      loading: 'loading'
-    })
-  },
-  mounted () {
-    // service.get('/article/list').then(res => {
-    //   console.log(res, 'regs', process.env.NODE_ENV)
-    // })
-    service({
-      url: '/article/list',
-      method: 'get'
-    }).then(res => {
-      console.log(res, 'regs', process.env.NODE_ENV)
+    ...mapState({
+      loading: state => state['@@loading'].effects['test/onePlusAction']
     })
   },
   methods: {
@@ -53,24 +83,53 @@ export default {
     addOne () {
       this.onePlus(1)
     },
+    // ...mapActions('home', ['initData', 'plusPage', 'initPage']),
     ...mapActions({
       onePlusAction: 'test/onePlusAction'
     }),
     ...mapMutations({
-      onePlus: 'test/onePlus'
+      onePlus: 'test/onePlus',
+      logout: 'user/LOGOUT'
     })
   }
 }
 </script>
 <style lang="scss" scoped>
-  .msg{
-    font-size: 24px;
-    line-height: 24px;
+.banner {
+  width: 100%;
+  height: auto;
+  img {
+    width: 100%;
+    height: auto;
   }
-  .sq{
-    width: 315px;
-    height: 40px;
-    background: #3a8;
-    margin: 0 auto;
+}
+.now-value {
+  padding: 0 15px;
+  box-sizing: border-box;
+  font-size: 16px;
+  // line-height: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon-list {
+  margin: 15px;
+  font-size: 24px;
+  .icon{
+    margin: 0 10px;
   }
+}
+.buttons{
+  padding: 0 15px;
+  font-size: 18px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  a{
+    color: #333
+  }
+}
 </style>

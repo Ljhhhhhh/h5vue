@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createLoadingPlugin from 'utils/vuex-loading'
 // import test from './modules/test'
 // import user from './modules/user'
 
@@ -17,15 +18,15 @@ files.keys().forEach(key => {
 // })
 
 export default new Vuex.Store({
+  plugins: [createLoadingPlugin()],
   state: {
-    msg: 'hello vuex',
-    loading: false,
+    // loading: false,
     direction: 'forward'
   },
   getters: {
-    loading (state) {
-      return state.loading
-    },
+    // loading (state) {
+    //   return state.loading
+    // },
     userData (state, getters) {
       return state.user.user
       // return getters['user/user']
@@ -36,12 +37,9 @@ export default new Vuex.Store({
     // }
   },
   mutations: {
-    setMsg (state, msg) {
-      state.msg = msg
-    },
-    setLoading (state, val) {
-      state.loading = val
-    },
+    // setLoading (state, val) {
+    //   state.loading = val
+    // },
     updateDirection (state, direction) {
       state.direction = direction
     }

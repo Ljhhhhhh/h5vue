@@ -35,13 +35,10 @@ export default [
           message: 'Account and password are incorrect.'
         }
       }
-      const info = users[token]
+
       return {
         code: 200,
-        data: {
-          ...info,
-          token
-        }
+        data: token
       }
     }
   },
@@ -58,7 +55,7 @@ export default [
       // mock error
       if (!info) {
         return {
-          code: 508,
+          code: 50008,
           message: 'Login failed, unable to get user details.'
         }
       }

@@ -25,7 +25,6 @@
   </div>
 </template>
 <script>
-// import { login } from '@/api/user'
 import { Field, Icon, Button } from 'vant'
 import { mapActions } from 'vuex'
 import VerifyCodeBtn from '@/components/VerifyCodeBtn'
@@ -62,9 +61,7 @@ export default {
         $router: this.$router,
         $route: this.$route
       }
-      this.login(data).then(res => {
-        console.log(res, 'res')
-      })
+      this.login(data)
     },
     ...mapActions({
       login: 'user/login'

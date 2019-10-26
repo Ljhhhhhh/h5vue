@@ -1,29 +1,26 @@
-# vue-cli-h5
+- [x] 自动注册路由表
+- [x] 自动注册Vuex
+- [x] 鉴权处理、登录拦截
+- [x] 页面切换动画
+- [x] 常用目录别名
+- [x] Vant
+- [x] Rem适配
+- [x] 全局scss
+- [x] 页面Title
+- [x] axios封装
+- [x] mock-server
+- [x] SVG图标组件
+- [x] 通用登录页面
+- [x] 通用列表页（集成vo-pages）
+- [x] V-console
+- [x] Dayjs?
+- [x] 跨域处理
+- [x] 404页面
+- [x] Lazyload
+### 线上环境优化
 
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
-
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- [x] CDN引入
+- [x] 资源压缩
+- [x] console.log去除
+- [x] gzip
+- [x] 关闭 sourcemap
