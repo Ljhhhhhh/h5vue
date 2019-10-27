@@ -11,7 +11,7 @@ const cdn = {
   js: [
     'https://cdn.bootcss.com/vue/2.6.10/vue.min.js',
     'https://cdn.bootcss.com/vue-router/3.0.3/vue-router.min.js',
-    'https://cdn.bootcss.com/vuex/3.0.1/vuex.min.js',
+    'https://cdn.bootcss.com/vuex/3.1.0/vuex.min.js',
     'https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js',
     'https://cdn.bootcss.com/js-cookie/2.2.1/js.cookie.min.js'
   ]
