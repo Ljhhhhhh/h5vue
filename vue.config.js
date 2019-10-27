@@ -4,7 +4,7 @@ const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const port = process.env.port || process.env.npm_config_port || 8888
 const cdnDomian = './' // cdn域名，如果有cdn修改成对应的cdn
-const name = 'h5Vue-cli' // page title
+const name = 'H5Vue' // page title
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 const cdn = {
   css: [],
@@ -61,13 +61,13 @@ module.exports = {
     name: name,
     resolve: {
       alias: {
-        '@': resolve('src'),
-        'views': resolve('src/views'),
-        'components': resolve('src/components'),
-        'api': resolve('src/api'),
-        'utils': resolve('src/utils'),
-        'assets': resolve('src/assets'),
-        'style': resolve('src/style')
+        '@': resolve('src'), // 主目录
+        'views': resolve('src/views'), // 页面
+        'components': resolve('src/components'), // 组件
+        'api': resolve('src/api'), // 接口
+        'utils': resolve('src/utils'), // 通用功能
+        'assets': resolve('src/assets'), // 静态资源
+        'style': resolve('src/style') // 通用样式
       }
     }
   },

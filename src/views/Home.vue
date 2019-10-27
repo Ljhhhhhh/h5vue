@@ -73,19 +73,19 @@ export default {
   },
   computed: {
     ...mapState({
-      loading: state => state['@@loading'].effects['test/onePlusAction']
+      loading: state => state['@@loading'].effects['test/onePlusAsync']
     })
   },
   methods: {
     add () {
-      this.onePlusAction(this.value)
+      this.onePlusAsync(this.value)
     },
     addOne () {
       this.onePlus(1)
     },
     // ...mapActions('home', ['initData', 'plusPage', 'initPage']),
     ...mapActions({
-      onePlusAction: 'test/onePlusAction'
+      onePlusAsync: 'test/onePlusAsync'
     }),
     ...mapMutations({
       onePlus: 'test/onePlus',

@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createLoadingPlugin from 'utils/vuex-loading'
-// import test from './modules/test'
-// import user from './modules/user'
 
 Vue.use(Vuex)
 
@@ -13,20 +11,12 @@ files.keys().forEach(key => {
   modules[key.replace(/(\.\/|\.js)/g, '')] = files(key).default
 })
 
-// const store = new Vuex.Store({
-//   modules
-// })
-
 export default new Vuex.Store({
   plugins: [createLoadingPlugin()],
   state: {
-    // loading: false,
-    direction: 'forward'
+    direction: 'forward' // 页面切换方向
   },
   getters: {
-    // loading (state) {
-    //   return state.loading
-    // },
     userData (state, getters) {
       return state.user.user
       // return getters['user/user']
@@ -37,9 +27,7 @@ export default new Vuex.Store({
     // }
   },
   mutations: {
-    // setLoading (state, val) {
-    //   state.loading = val
-    // },
+    // 更新页面切换方向
     updateDirection (state, direction) {
       state.direction = direction
     }
@@ -49,9 +37,3 @@ export default new Vuex.Store({
   },
   modules
 })
-
-/*
-this.$store.registerModule('d',{
-
-})
-*/

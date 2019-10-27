@@ -69,3 +69,14 @@ function shouldEffect ({ type }, includes, excludes) {
 }
 
 export default createLoadingPlugin
+// 需要在vuex中引入并注册成插件：
+/**
+import createLoadingPlugin from 'utils/vuex-loading'
+export default new Vuex.Store({
+  plugins: [createLoadingPlugin()],
+  state: {
+    // loading: false,
+    direction: 'forward'
+  }
+})
+**/

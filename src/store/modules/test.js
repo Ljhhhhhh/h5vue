@@ -2,7 +2,7 @@ const state = {
   number: 1
 }
 const actions = {
-  onePlusAction: ({ commit }, { val }) => {
+  onePlusAsync: ({ commit }, { val }) => {
     // commit('setLoading', true, { root: true }) // 调用全局vuex的setLoading方法
     // 需要使用promise用来配合loading
     return new Promise((resolve, reject) => {

@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'h5Vue-cli',
+  title: 'H5Vue',
 
   /**
    * @type {boolean} true | false

@@ -41,7 +41,7 @@ routerContext.keys().forEach(route => {
 
 routes = routes.concat({
   path: '*',
-  redirect: '/home'
+  redirect: '/404'
 })
 
 const createRouter = () => new Router({

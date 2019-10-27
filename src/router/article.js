@@ -4,7 +4,7 @@ export default [
     name: 'article',
     component: () => import(/* webpackChunkName: "article" */ 'views/Article.vue'),
     meta: {
-      // auth: true,
+      auth: true,
       title: '文章',
       keepAlive: true
     }
