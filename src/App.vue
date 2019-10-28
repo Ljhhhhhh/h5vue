@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <transition :name="transitionName">
+      <!-- <router-view class="router"></router-view> -->
       <keep-alive v-if="$route.meta.keepAlive">
         <router-view class="router"></router-view>
       </keep-alive>
@@ -26,13 +27,16 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 .router {
   width: 100%;
   height: 100%;
-  height: 100vh;
+  // height: 100vh;
   overflow: scroll;
-  position: fixed;
+  position: absolute;
   overflow: hidden !important;
   overflow-y: auto !important;
   -webkit-overflow-scrolling: touch;
