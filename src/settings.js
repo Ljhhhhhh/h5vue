@@ -8,6 +8,7 @@ module.exports = {
    */
   fixedHeader: false,
   vconsole: true,
+  needPageTrans: true,
 
   /**
    * @type {boolean} true | false

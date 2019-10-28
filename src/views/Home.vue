@@ -8,7 +8,6 @@
         </van-swipe-item>
       </van-swipe>
     </div>
-
     <div class="now-value">
       <span>当前数值{{$store.state.test.number}}</span>
       <div>
@@ -22,13 +21,18 @@
       </div>
     </div>
     <div class="icon-list">
-      <svg-icon v-for="icon in iconList" :key="icon" class="icon" :icon-class="icon" />
+      <svg-icon v-for="icon in iconList"
+                :key="icon"
+                class="icon"
+                :icon-class="icon" />
     </div>
     <div class="buttons">
-      <van-button type="warning" @click="logout">退出登录</van-button>
-      <router-link to="/404"><svg-icon icon-class="404"/>前往404页面</router-link>
+      <van-button type="warning"
+                  @click="logout">退出登录</van-button>
+      <router-link to="/404">
+        <svg-icon icon-class="404" />前往404页面</router-link>
     </div>
-    <footer-tabbar/>
+    <footer-tabbar />
   </div>
 </template>
 
@@ -116,11 +120,11 @@ export default {
 .icon-list {
   margin: 15px;
   font-size: 24px;
-  .icon{
+  .icon {
     margin: 0 10px;
   }
 }
-.buttons{
+.buttons {
   padding: 0 15px;
   font-size: 18px;
   width: 100%;
@@ -128,8 +132,8 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  a{
-    color: #333
+  a {
+    color: #333;
   }
 }
 </style>
