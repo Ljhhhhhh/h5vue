@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="container">
     <div class="banner">
       <van-swipe :autoplay="3000">
         <van-swipe-item v-for="(image, index) in images"
@@ -99,6 +99,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.container{
+  height: auto;
+  width: 100%;
+  padding-bottom: 50px;
+}
 .banner {
   width: 100%;
   height: auto;

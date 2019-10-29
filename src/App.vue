@@ -37,15 +37,14 @@ export default {
 .router {
   width: 100%;
   height: 100%;
-  overflow: scroll;
   position: absolute;
-  overflow: hidden !important;
-  overflow-y: auto !important;
+  overflow-x: hidden;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: #fff;
+  // background-color: #fff;
 }
 </style>
