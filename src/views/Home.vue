@@ -83,6 +83,8 @@ export default {
   methods: {
     add () {
       this.onePlusAsync(this.value)
+      // 测试sentry
+      console.log(aaa)
     },
     addOne () {
       this.onePlus(1)

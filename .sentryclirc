@@ -1,0 +1,7 @@
+[auth]
+token=50c4b43ff44645ac8a02928952720050f46a7420e10b45bf8eb6bfdc018c0385
+
+[defaults]
+url=https://sentry.io/
+org=ljh-sentry
+project=vue
