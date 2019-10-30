@@ -153,7 +153,7 @@ module.exports = {
         configFile: './.sentryclirc', // 配置文件地址
         release: process.env.RELEASE_VERSION, // 版本号
         deleteAfterCompile: true,
-        urlPrefix: '~/static/js' // cdn js的代码路径前缀
+        urlPrefix: 'http://h5vue.cixi518.com/static/js' // cdn js的代码路径前缀
       }])
       // config.plugin('analyzer').use(BundleAnalyzerPlugin)
       config.plugin('html').tap(args => {
