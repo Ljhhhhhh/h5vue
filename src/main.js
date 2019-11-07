@@ -10,8 +10,6 @@ import '@/icons' // icon
 import '@/style/common.scss'
 import { Lazyload } from 'vant'
 import defaultSettings from '@/settings'
-import * as Sentry from '@sentry/browser'
-import * as Integrations from '@sentry/integrations'
 
 /**
  * If you don't want to use mock-server
@@ -23,10 +21,6 @@ import * as Integrations from '@sentry/integrations'
  */
 import { mockXHR } from '../mock'
 
-Sentry.init({
-  dsn: 'https://8754d430a56949cda312695f5586b2df@sentry.io/1800421',
-  integrations: [new Integrations.Vue({ Vue, attachProps: true })]
-})
 if (process.env.NODE_ENV === 'production') {
   mockXHR()
 }
