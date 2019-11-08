@@ -6,7 +6,9 @@
       </keep-alive>
       <router-view class="router" v-else></router-view>
     </transition>
-    <footer-tabbar />
+    <keep-alive v-if="$route.meta.keepAlive">
+      <footer-tabbar />
+    </keep-alive>
   </div>
 </template>
 
