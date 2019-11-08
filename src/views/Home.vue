@@ -32,14 +32,12 @@
       <router-link to="/404">
         <svg-icon icon-class="404" />前往404页面</router-link>
     </div>
-    <footer-tabbar />
   </div>
 </template>
 
 <script>
 import { Button, Tabbar, TabbarItem, Swipe, SwipeItem } from 'vant'
 import { mapActions, mapMutations, mapState } from 'vuex' // createNamespacedHelpers
-import FooterTabbar from 'components/FooterTabbar'
 // const { mapActions } = createNamespacedHelpers('test') // 可使用这种方式直接获得test模板
 
 export default {
@@ -72,8 +70,7 @@ export default {
     [Tabbar.name]: Tabbar,
     [TabbarItem.name]: TabbarItem,
     [Swipe.name]: Swipe,
-    [SwipeItem.name]: SwipeItem,
-    FooterTabbar
+    [SwipeItem.name]: SwipeItem
   },
   computed: {
     ...mapState({
@@ -98,6 +95,7 @@ export default {
   }
 }
 </script>
+
 <style lang="scss" scoped>
 .container{
   height: auto;

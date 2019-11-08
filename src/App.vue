@@ -6,9 +6,12 @@
       </keep-alive>
       <router-view class="router" v-else></router-view>
     </transition>
+    <footer-tabbar />
   </div>
 </template>
+
 <script>
+import FooterTabbar from 'components/FooterTabbar'
 import defaultSetting from './settings'
 export default {
   name: 'app',
@@ -19,6 +22,9 @@ export default {
       }
       return ''
     }
+  },
+  components: {
+    FooterTabbar
   }
 }
 </script>

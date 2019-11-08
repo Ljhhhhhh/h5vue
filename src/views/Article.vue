@@ -24,14 +24,13 @@
         </ul>
       </vo-pages>
     </div>
-    <footer-tabbar/>
   </div>
 </template>
+
 <script>
 import { Tabbar, TabbarItem } from 'vant'
 import { fetchList } from 'api/article'
 import dayjs from 'dayjs'
-import FooterTabbar from 'components/FooterTabbar'
 import VoPages from 'vo-pages'
 import 'vo-pages/lib/vo-pages.css'
 export default {
@@ -51,8 +50,7 @@ export default {
   components: {
     [Tabbar.name]: Tabbar,
     [TabbarItem.name]: TabbarItem,
-    VoPages,
-    FooterTabbar
+    VoPages
   },
   methods: {
     pullingDown () {
@@ -87,6 +85,7 @@ export default {
   }
 }
 </script>
+
 <style lang="scss" scoped>
 p{
   margin-block-start: 0;
