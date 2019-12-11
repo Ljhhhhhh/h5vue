@@ -1,5 +1,6 @@
 <template>
-  <van-tabbar route>
+  <van-tabbar route
+              :safe-area-inset-bottom="true">
     <van-tabbar-item icon="home-o"
                      replace
                      to="/">首页</van-tabbar-item>
@@ -7,6 +8,7 @@
                      replace
                      to="/article">文章</van-tabbar-item>
   </van-tabbar>
+
 </template>
 <script>
 import { Tabbar, TabbarItem } from 'vant'
