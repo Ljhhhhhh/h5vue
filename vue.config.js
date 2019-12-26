@@ -143,8 +143,11 @@ module.exports = {
           config.optimization.runtimeChunk('single')
         }
       )
-    if (IS_PRODUCTION) {
+    if (!IS_PRODUCTION) {
       config.plugin('analyzer').use(BundleAnalyzerPlugin)
+    }
+    if (IS_PRODUCTION) {
+      // config.plugin('analyzer').use(BundleAnalyzerPlugin)
       config.plugin('html').tap(args => {
         args[0].cdn = cdn
         return args
