@@ -38,6 +38,7 @@ module.exports = {
   devServer: {
     port: port,
     open: true,
+    disableHostCheck: process.env.NODE_ENV === 'development',
     overlay: {
       warnings: false,
       errors: true
