@@ -187,10 +187,15 @@ module.exports = {
     sourceMap: false,
     // css预设器配置项
     // 启用 CSS modules for all css / pre-processor files.
-    modules: false,
+    requireModuleExtension: false,
     loaderOptions: {
       sass: {
-        data: '@import "style/_mixin.scss";@import "style/_variables.scss";@import "style/common.scss";' // 全局引入
+        /* 以前的写法是：
+            data：xxxx
+            现在是：
+            prependData
+         */
+        prependData: '@import "style/_mixin.scss";@import "style/_variables.scss";@import "style/common.scss";' // 全局引入
       }
     }
   }
