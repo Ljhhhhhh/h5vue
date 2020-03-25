@@ -26,7 +26,7 @@ let routes = [
   }
 ]
 
-const routerContext = require.context('./', true, /\.js$/)
+const routerContext = require.context('./', true, /\.ts$/)
 routerContext.keys().forEach(route => {
   // 如果是根目录的 index.js 、不处理
   if (route.startsWith('./index')) {

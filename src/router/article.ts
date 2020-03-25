@@ -2,7 +2,7 @@ export default [
   {
     path: '/article',
     name: 'article',
-    component: () => import(/* webpackChunkName: "article" */ 'views/Article.vue'),
+    component: () => import(/* webpackChunkName: "article" */ 'views/Article'),
     meta: {
       auth: true,
       title: '文章',

@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import createLoadingPlugin from 'utils/vuex-loading'
+import createLoadingPlugin from 'utils/vuex-loading.ts'
 
 Vue.use(Vuex)
 
-const files = require.context('./modules', false, /\.js$/)
+const files = require.context('./modules', false, /\.ts$/)
 const modules = {}
 
 files.keys().forEach(key => {
-  modules[key.replace(/(\.\/|\.js)/g, '')] = files(key).default
+  modules[key.replace(/(\.\/|\.ts)/g, '')] = files(key).default
 })
 
 export default new Vuex.Store({

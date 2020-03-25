@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="content">
-      <van-field placeholder="手机号码" v-model="phoneNumber" left-icon="phone-o" :error-message="phoneNumberError" />
+      <van-field placeholder="用户名" v-model="username" left-icon="manager" :error-message="usernameError" />
       <!-- eye -->
       <van-field v-if="loginWay==='password'" placeholder="登录密码" v-model="password" left-icon="lock" :type="passwordType">
          <van-icon slot="right-icon" @click="switchPasswordType" :name="passwordIcon"/>
@@ -32,19 +32,19 @@ export default {
   name: 'Login',
   data () {
     return {
-      phoneNumber: '13216698987',
+      username: 'admin',
       password: '123456',
       code: '',
       loginWay: 'password',
       passwordType: 'password',
-      phoneNumberError: ''
+      usernameError: ''
     }
   },
   methods: {
     sendVerifyCode () {
-      this.phoneNumberError = ''
-      if (!this.phoneNumber) { // 根据需求做判断
-        this.phoneNumberError = '手机号码必填'
+      this.usernameError = ''
+      if (!this.username) { // 根据需求做判断
+        this.usernameError = '用户名必填'
       }
     },
     switchPasswordType () {
@@ -56,7 +56,7 @@ export default {
     },
     handleLogin () {
       const data = {
-        phoneNumber: this.phoneNumber,
+        username: this.username,
         password: this.password,
         $router: this.$router,
         $route: this.$route

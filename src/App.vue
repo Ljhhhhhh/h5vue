@@ -9,7 +9,7 @@
   </div>
 </template>
 <script>
-import defaultSetting from './settings'
+import defaultSetting from './settings.ts'
 export default {
   name: 'app',
   computed: {

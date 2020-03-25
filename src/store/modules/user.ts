@@ -1,4 +1,4 @@
-import { login, getInfo } from 'api/user'
+import { login, getInfo } from 'api/user.ts'
 import { Toast } from 'vant'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
@@ -40,7 +40,7 @@ export default {
     async login (state, data) {
       try {
         let res = await login({
-          phoneNumber: data.phoneNumber,
+          username: data.username,
           password: data.password
         })
         state.commit(LOGIN, res)

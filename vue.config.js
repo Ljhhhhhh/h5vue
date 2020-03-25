@@ -29,6 +29,9 @@ function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
+// const devServerPort = 9527 // TODO: get this variable from setting.ts
+const mockServerPort = 9528 // TODO: get this variable from setting.ts
+
 module.exports = {
   publicPath: IS_PRODUCTION ? cdnDomian : './',
   outputDir: 'dist',
@@ -46,20 +49,28 @@ module.exports = {
       // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://127.0.0.1:${port}/mock`,
+        target: `http://localhost:${mockServerPort}/mock-api/v1`,
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
         }
       }
-    },
-    after: require('./mock/mock-server.js')
+    }
+    // after: require('./mock/mock-server.ts')
+  },
+  pwa: {
+    name: name,
+    workboxPluginMode: 'InjectManifest',
+    workboxOptions: {
+      swSrc: path.resolve(__dirname, 'src/pwa/service-worker.js')
+    }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
     name: name,
     resolve: {
+      extensions: ['vue', '.ts', '.js'],
       alias: {
         '@': resolve('src'), // 主目录
         'views': resolve('src/views'), // 页面
@@ -69,6 +80,16 @@ module.exports = {
         'assets': resolve('src/assets'), // 静态资源
         'style': resolve('src/style') // 通用样式
       }
+    }
+  },
+  pluginOptions: {
+    'style-resources-loader': {
+      preProcessor: 'scss',
+      // @import "style/_mixin.scss";@import "style/_variables.scss";@import "style/common.scss";
+      patterns: [
+        path.resolve(__dirname, 'src/styles/_variables.scss'),
+        path.resolve(__dirname, 'src/styles/_mixins.scss')
+      ]
     }
   },
   chainWebpack (config) {
@@ -102,6 +123,14 @@ module.exports = {
         return options
       })
       .end()
+
+    config.module
+      .rule('tsx')
+      .use('ts-loader')
+      .loader('ts-loader')
+      .tap(options => {
+        return Object.assign(options || {}, { allowTsInNodeModules: true })
+      })
 
     config
     // https://webpack.js.org/configuration/devtool/#development

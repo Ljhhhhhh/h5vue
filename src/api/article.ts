@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from '@/utils/request.ts'
 
 export function fetchList (query) {
   const { pageSize = 10, page = 1, ...rest } = query || {}

@@ -1,8 +1,8 @@
-import request from '@/utils/request'
+import request from '@/utils/request.ts'
 
 export function login (data) {
   return request({
-    url: '/user/login',
+    url: '/users/login',
     method: 'post',
     data
   })
@@ -10,7 +10,7 @@ export function login (data) {
 
 export function getInfo (token) {
   return request({
-    url: '/user/info',
+    url: '/users/info',
     method: 'get',
     params: { token }
   })
@@ -18,7 +18,7 @@ export function getInfo (token) {
 
 export function logout () {
   return request({
-    url: '/user/logout',
+    url: '/users/logout',
     method: 'post'
   })
 }

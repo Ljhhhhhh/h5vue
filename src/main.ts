@@ -5,10 +5,10 @@ import router from '@/router'
 import store from '@/store'
 import 'utils/permission'
 import SvgIcon from 'components/SvgIcon'
-import '@/icons' // icon
+import '@/icons/index.ts' // icon
 import '@/style/common.scss'
 import { Lazyload } from 'vant'
-import defaultSettings from '@/settings'
+import defaultSettings from './settings'
 
 /**
  * If you don't want to use mock-server
@@ -18,11 +18,11 @@ import defaultSettings from '@/settings'
  * Currently MockJs will be used in the production environment,
  * please remove it before going online! ! !
  */
-import { mockXHR } from '../mock'
+// import { mockXHR } from '../mock'
 
-if (process.env.NODE_ENV === 'production') {
-  mockXHR()
-}
+// if (process.env.NODE_ENV === 'production') {
+//   mockXHR()
+// }
 
 // options 为可选参数，无则不传
 Vue.use(Lazyload)

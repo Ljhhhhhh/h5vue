@@ -1,10 +1,26 @@
 import Mock from 'mockjs'
-import { param2Obj } from '../src/utils'
+// import { param2Obj } from '../src/utils.ts'
 
 import user from './user'
 import role from './role'
 import article from './article'
 import search from './remote-search'
+
+const param2Obj = function param2Obj (url) {
+  const search = url.split('?')[1]
+  if (!search) {
+    return {}
+  }
+  return JSON.parse(
+    '{"' +
+      decodeURIComponent(search)
+        .replace(/"/g, '\\"')
+        .replace(/&/g, '","')
+        .replace(/=/g, '":"')
+        .replace(/\+/g, ' ') +
+      '"}'
+  )
+}
 
 const mocks = [
   ...user,
