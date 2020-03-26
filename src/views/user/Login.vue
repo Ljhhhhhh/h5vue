@@ -26,8 +26,9 @@
 </template>
 <script>
 import { Field, Icon, Button } from 'vant'
-import { mapActions } from 'vuex'
+// import { mapActions } from 'vuex'
 import VerifyCodeBtn from '@/components/VerifyCodeBtn'
+import { UserModule } from '../../store/modules/user'
 export default {
   name: 'Login',
   data () {
@@ -61,11 +62,12 @@ export default {
         $router: this.$router,
         $route: this.$route
       }
-      this.login(data)
+      UserModule.Login(data)
+      // this.login(data)
     },
-    ...mapActions({
-      login: 'user/login'
-    })
+    // ...mapActions({
+    //   login: 'user/login'
+    // })
   },
   computed: {
     loginWayObj: function () {

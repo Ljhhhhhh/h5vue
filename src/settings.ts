@@ -7,7 +7,7 @@ module.exports = {
    * @description Whether fix the header
    */
   fixedHeader: false,
-  vconsole: true,
+  vconsole: false,
   needPageTrans: true,
 
   /**

@@ -9,15 +9,15 @@
       </van-swipe>
     </div>
     <div class="now-value">
-      <span>当前数值{{$store.state.test.number}}</span>
+      <span>当前数值{{number}}</span>
       <div>
-        <van-button type="info"
+        <!-- <van-button type="info"
                     @click="add"
                     :loading="loading"
                     size="small">异步+1</van-button>
         <van-button type="primary"
                     size="small"
-                    @click="addOne">+1</van-button>
+                    @click="addOne">+1</van-button> -->
       </div>
     </div>
     <div class="icon-list">
@@ -35,71 +35,58 @@
     <footer-tabbar />
   </div>
 </template>
-
-<script>
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { NumberModule } from '@/store/modules/test'
+import FooterTabbar from "@/components/FooterTabbar.vue";
 import { Button, Tabbar, TabbarItem, Swipe, SwipeItem } from 'vant'
-import { mapActions, mapMutations, mapState } from 'vuex' // createNamespacedHelpers
-import FooterTabbar from 'components/FooterTabbar'
-// const { mapActions } = createNamespacedHelpers('test') // 可使用这种方式直接获得test模板
+import { UserModule } from '../store/modules/user';
 
-export default {
-  name: 'home',
-  data () {
-    return {
-      value: 1,
-      images: [
-        'https://img.yzcdn.cn/vant/apple-1.jpg',
-        'https://img.yzcdn.cn/vant/apple-2.jpg'
-      ],
-      iconList: [
-        'dashboard',
-        'example',
-        'eye-open',
-        'eye',
-        'form',
-        'link',
-        'nested',
-        'password',
-        'table',
-        'tree',
-        'user',
-        '404'
-      ]
-    }
-  },
+@Component({
+  name: "home",
   components: {
+    FooterTabbar,
     [Button.name]: Button,
     [Tabbar.name]: Tabbar,
     [TabbarItem.name]: TabbarItem,
     [Swipe.name]: Swipe,
     [SwipeItem.name]: SwipeItem,
-    FooterTabbar
-  },
-  computed: {
-    ...mapState({
-      loading: state => state['@@loading'].effects['test/onePlusAsync']
-    })
-  },
-  methods: {
-    add () {
-      this.onePlusAsync(this.value)
-    },
-    addOne () {
-      this.onePlus(1)
-    },
-    // ...mapActions('home', ['initData', 'plusPage', 'initPage']),
-    ...mapActions({
-      onePlusAsync: 'test/onePlusAsync'
-    }),
-    ...mapMutations({
-      onePlus: 'test/onePlus',
-      logout: 'user/LOGOUT'
-    })
+  }
+})
+export default class extends Vue {
+  private value = 1;
+  private images = [
+    "https://img.yzcdn.cn/vant/apple-1.jpg",
+    "https://img.yzcdn.cn/vant/apple-2.jpg"
+  ];
+  private iconList = [
+    "dashboard",
+    "example",
+    "eye-open",
+    "eye",
+    "form",
+    "link",
+    "nested",
+    "password",
+    "table",
+    "tree",
+    "user",
+    "404"
+  ];
+
+  get number() {
+    return NumberModule.number
+  }
+
+  private async logout() {
+    await UserModule.LogOut()
+    this.$router.push(`/login?redirect=${this.$route.fullPath}`)
   }
 }
 </script>
+
 <style lang="scss" scoped>
-.container{
+.container {
   height: auto;
   width: 100%;
   padding-bottom: 50px;

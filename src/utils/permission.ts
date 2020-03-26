@@ -2,6 +2,7 @@ import router from '@/router'
 import store from '@/store'
 import { Notify } from 'vant'
 import { getToken } from '@/utils/auth' // get token from cookie
+import { UserModule } from '@/store/modules/user'
 import getPageTitle from '@/utils/get-page-title'
 
 const whiteList = ['/login', '/register'] // 白名单列表
@@ -13,23 +14,23 @@ router.beforeEach(async (to, from, next) => {
   // determine whether the user has logged in
   const hasToken = getToken()
 
-  if (hasToken) {
+  if (UserModule.token) {
     if (to.path === '/login') {
       // 已经登录，跳转到首页
       next({ path: '/' })
     } else {
       // 获取用户信息
-      const hasGetUserInfo = store.getters.userData && store.getters.userData.name
+      const hasGetUserInfo = UserModule.token && UserModule.name
       if (hasGetUserInfo) {
         next()
       } else {
         try {
           // get user info
-          await store.dispatch('user/getInfo')
+          await await UserModule.GetUserInfo()
           next()
         } catch (error) {
           // 清除用户信息，退出登录，跳转登录页
-          store.commit('user/LOGOUT')
+          UserModule.ResetToken()
           Notify.error(error || 'Has Error')
           next(`/login?redirect=${to.path}`)
         }

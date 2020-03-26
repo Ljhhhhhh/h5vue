@@ -97,7 +97,7 @@ export const getUserInfo = (req: Request, res: Response) => {
   return res.json({
     code: 20000,
     data: {
-      user: req.header('X-Access-Token') == 'admin-token' ? userList[0] : userList[1]
+      user: req.header('X-Token') == 'admin-token' ? userList[0] : userList[1]
     }
   })
 }

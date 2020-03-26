@@ -1,4 +1,5 @@
 const path = require('path')
+const merge = require('webpack-merge');
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
@@ -128,6 +129,24 @@ module.exports = {
       .rule('tsx')
       .use('ts-loader')
       .loader('ts-loader')
+      .tap(options => {
+        options = merge(options, {
+          transpileOnly: true,
+          getCustomTransformers: () => ({
+            before: [
+              tsImportPluginFactory({
+                libraryName: 'vant',
+                libraryDirectory: 'es',
+                style: true
+              })
+            ]
+          }),
+          compilerOptions: {
+            module: 'es2015'
+          }
+        })
+        return options;
+      })
       .tap(options => {
         return Object.assign(options || {}, { allowTsInNodeModules: true })
       })

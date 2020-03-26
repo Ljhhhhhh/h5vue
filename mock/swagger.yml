@@ -715,7 +715,7 @@ components:
     AccessTokenAuth:
       type: apiKey
       in: header
-      name: X-Access-Token
+      name: X-Token
   responses:
     NotFound:
       description: The specified resource was not found
