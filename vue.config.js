@@ -1,7 +1,7 @@
 const path = require('path')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin')
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const port = process.env.port || process.env.npm_config_port || 8888
 const cdnDomian = './' // cdn域名，如果有cdn修改成对应的cdn
 const name = 'H5Vue' // page title
@@ -143,7 +143,7 @@ module.exports = {
         }
       )
     if (IS_PRODUCTION) {
-      // config.plugin('analyzer').use(BundleAnalyzerPlugin)
+      config.plugin('analyzer').use(BundleAnalyzerPlugin)
       config.plugin('html').tap(args => {
         args[0].cdn = cdn
         return args
