@@ -1,9 +1,7 @@
 const path = require('path')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
-const gitSha = require('child_process').execSync('git rev-parse HEAD').toString().trim() // 这个是获取提交版本的记录
-const SentryWebpackPlugin = require('@sentry/webpack-plugin')
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const port = process.env.port || process.env.npm_config_port || 8888
 const cdnDomian = './' // cdn域名，如果有cdn修改成对应的cdn
 const name = 'H5Vue' // page title
@@ -18,8 +16,6 @@ const cdn = {
     'https://cdn.bootcss.com/js-cookie/2.2.1/js.cookie.min.js'
   ]
 }
-
-process.env.RELEASE_VERSION = gitSha
 
 const externals = {
   vue: 'Vue',
@@ -38,7 +34,7 @@ module.exports = {
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
-  productionSourceMap: true,
+  productionSourceMap: false,
   devServer: {
     port: port,
     open: true,
@@ -147,14 +143,6 @@ module.exports = {
         }
       )
     if (IS_PRODUCTION) {
-      config.plugin('sentry').use(SentryWebpackPlugin, [{
-        ignore: ['node_modules'],
-        include: './dist', // 上传dist文件的js
-        configFile: './.sentryclirc', // 配置文件地址
-        release: process.env.RELEASE_VERSION, // 版本号
-        deleteAfterCompile: true,
-        urlPrefix: 'http://h5vue.cixi518.com/static/js' // cdn js的代码路径前缀
-      }])
       // config.plugin('analyzer').use(BundleAnalyzerPlugin)
       config.plugin('html').tap(args => {
         args[0].cdn = cdn
@@ -180,7 +168,7 @@ module.exports = {
         new UglifyjsWebpackPlugin({
           // 生产环境推荐关闭 sourcemap 防止源码泄漏
           // 服务端通过前端发送的行列，根据 sourcemap 转为源文件位置
-          sourceMap: true,
+          // sourceMap: true,
           uglifyOptions: {
             warnings: false,
             compress: {

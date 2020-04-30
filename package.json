@@ -13,7 +13,6 @@
     "axios": "^0.19.0",
     "core-js": "2.6.5",
     "dayjs": "^1.8.16",
-    "fastclick": "^1.0.6",
     "js-cookie": "^2.2.1",
     "lib-flexible": "^0.3.2",
     "raven-js": "^3.27.2",
