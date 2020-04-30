@@ -1,6 +1,9 @@
 const path = require('path')
+const glob = require('glob')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin')
+const HappyPack = require('happypack')
+const PurgecssPlugin = require('purgecss-webpack-plugin')
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const port = process.env.port || process.env.npm_config_port || 8888
 const cdnDomian = './' // cdn域名，如果有cdn修改成对应的cdn
@@ -23,6 +26,10 @@ const externals = {
   vuex: 'Vuex',
   axios: 'axios',
   'js-cookie': 'Cookies'
+}
+
+const PATHS = {
+  src: path.join(__dirname, 'src')
 }
 
 function resolve (dir) {
@@ -62,12 +69,12 @@ module.exports = {
     resolve: {
       alias: {
         '@': resolve('src'), // 主目录
-        'views': resolve('src/views'), // 页面
-        'components': resolve('src/components'), // 组件
-        'api': resolve('src/api'), // 接口
-        'utils': resolve('src/utils'), // 通用功能
-        'assets': resolve('src/assets'), // 静态资源
-        'style': resolve('src/style') // 通用样式
+        views: resolve('src/views'), // 页面
+        components: resolve('src/components'), // 组件
+        api: resolve('src/api'), // 接口
+        utils: resolve('src/utils'), // 通用功能
+        assets: resolve('src/assets'), // 静态资源
+        style: resolve('src/style') // 通用样式
       }
     }
   },
@@ -76,10 +83,7 @@ module.exports = {
     config.plugins.delete('prefetch') // TODO: need test
 
     // set svg-sprite-loader
-    config.module
-      .rule('svg')
-      .exclude.add(resolve('src/icons'))
-      .end()
+    config.module.rule('svg').exclude.add(resolve('src/icons')).end()
     config.module
       .rule('icons')
       .test(/\.svg$/)
@@ -97,62 +101,77 @@ module.exports = {
       .rule('vue')
       .use('vue-loader')
       .loader('vue-loader')
-      .tap(options => {
+      .tap((options) => {
         options.compilerOptions.preserveWhitespace = true
         return options
       })
       .end()
 
     config
-    // https://webpack.js.org/configuration/devtool/#development
-      .when(process.env.NODE_ENV === 'development',
-        config => config.devtool('cheap-source-map')
+      // https://webpack.js.org/configuration/devtool/#development
+      .when(process.env.NODE_ENV === 'development', (config) =>
+        config.devtool('cheap-source-map')
       )
 
-    config
-      .when(process.env.NODE_ENV !== 'development',
-        config => {
-          config
-            .plugin('ScriptExtHtmlWebpackPlugin')
-            .after('html')
-            .use('script-ext-html-webpack-plugin', [{
+    config.when(process.env.NODE_ENV !== 'development', (config) => {
+      config
+        .plugin('ScriptExtHtmlWebpackPlugin')
+        .after('html')
+        .use('script-ext-html-webpack-plugin', [
+          {
             // `runtime` must same as runtimeChunk name. default is `runtime`
-              inline: /runtime\..*\.js$/
-            }])
-            .end()
-          config
-            .optimization.splitChunks({
-              chunks: 'all',
-              cacheGroups: {
-                libs: {
-                  name: 'chunk-libs',
-                  test: /[\\/]node_modules[\\/]/,
-                  priority: 10,
-                  chunks: 'initial' // only package third parties that are initially dependent
-                },
-                commons: {
-                  name: 'chunk-commons',
-                  test: resolve('src/components'), // can customize your rules
-                  minChunks: 3, //  minimum common number
-                  priority: 5,
-                  reuseExistingChunk: true
-                }
-              }
-            })
-          config.optimization.runtimeChunk('single')
+            inline: /runtime\..*\.js$/
+          }
+        ])
+        .end()
+      config.optimization.splitChunks({
+        chunks: 'all',
+        cacheGroups: {
+          libs: {
+            name: 'chunk-libs',
+            test: /[\\/]node_modules[\\/]/,
+            priority: 10,
+            chunks: 'initial' // only package third parties that are initially dependent
+          },
+          commons: {
+            name: 'chunk-commons',
+            test: resolve('src/components'), // can customize your rules
+            minChunks: 3, //  minimum common number
+            priority: 5,
+            reuseExistingChunk: true
+          }
         }
-      )
+      })
+      config.optimization.runtimeChunk('single')
+    })
     if (IS_PRODUCTION) {
       // config.plugin('analyzer').use(BundleAnalyzerPlugin)
-      config.plugin('html').tap(args => {
+      config.plugin('html').tap((args) => {
         args[0].cdn = cdn
         return args
       })
       config.externals(externals)
-      config.plugin('html').tap(args => {
+      config.plugin('html').tap((args) => {
         args[0].minify.minifyCSS = true // 压缩html中的css
         return args
       })
+      config.plugin('HappyPack').use(HappyPack, [
+        {
+          loaders: [
+            {
+              loader: 'babel-loader?cacheDirectory=true'
+            }
+          ]
+        }
+      ])
+      // TODO:: tree sharking 无用css
+      // TODO:: https://github.com/Yatoo2018/webpack-chain/tree/zh-cmn-Hans 看一下 文档
+      config
+        .plugin('pruecss')
+        .use(PurgecssPlugin)
+        .tap(() => ({
+          paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true })
+        }))
       // gzip需要nginx进行配合
       config
         .plugin('compression')
@@ -190,7 +209,8 @@ module.exports = {
     modules: false,
     loaderOptions: {
       sass: {
-        data: '@import "style/_mixin.scss";@import "style/_variables.scss";@import "style/common.scss";' // 全局引入
+        data:
+          '@import "style/_mixin.scss";@import "style/_variables.scss";@import "style/common.scss";' // 全局引入
       }
     }
   }
