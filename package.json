@@ -37,6 +37,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "glob": "^7.1.6",
     "happypack": "^5.0.1",
+    "image-webpack-loader": "^6.0.0",
     "mini-css-extract-plugin": "^0.9.0",
     "mockjs": "^1.0.1-beta3",
     "postcss-pxtorem": "^4.0.1",

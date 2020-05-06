@@ -83,7 +83,10 @@ module.exports = {
     config.plugins.delete('prefetch') // TODO: need test
 
     // set svg-sprite-loader
-    config.module.rule('svg').exclude.add(resolve('src/icons')).end()
+    config.module
+      .rule('svg')
+      .exclude.add(resolve('src/icons'))
+      .end()
     config.module
       .rule('icons')
       .test(/\.svg$/)
@@ -101,19 +104,36 @@ module.exports = {
       .rule('vue')
       .use('vue-loader')
       .loader('vue-loader')
-      .tap((options) => {
+      .tap(options => {
         options.compilerOptions.preserveWhitespace = true
         return options
       })
       .end()
+    config.module
+      .rule('img')
+      .test(/\.(gif|png|jpe?g)$/i)
+      .use('file-loader')
+      .loader('image-webpack-loader')
+      // .tap(options => {
+      //   options.query = {
+      //     progressive: true,
+      //     optimizationLevel: 7,
+      //     interlaced: false,
+      //     pngquant: {
+      //       quality: '65-90',
+      //       speed: 4
+      //     }
+      //   }
+      //   return options
+      // })
 
     config
       // https://webpack.js.org/configuration/devtool/#development
-      .when(process.env.NODE_ENV === 'development', (config) =>
+      .when(process.env.NODE_ENV === 'development', config =>
         config.devtool('cheap-source-map')
       )
 
-    config.when(process.env.NODE_ENV !== 'development', (config) => {
+    config.when(process.env.NODE_ENV !== 'development', config => {
       config
         .plugin('ScriptExtHtmlWebpackPlugin')
         .after('html')
@@ -146,12 +166,12 @@ module.exports = {
     })
     if (IS_PRODUCTION) {
       // config.plugin('analyzer').use(BundleAnalyzerPlugin)
-      config.plugin('html').tap((args) => {
+      config.plugin('html').tap(args => {
         args[0].cdn = cdn
         return args
       })
       config.externals(externals)
-      config.plugin('html').tap((args) => {
+      config.plugin('html').tap(args => {
         args[0].minify.minifyCSS = true // 压缩html中的css
         return args
       })
@@ -164,14 +184,6 @@ module.exports = {
           ]
         }
       ])
-      // TODO:: tree sharking 无用css
-      // TODO:: https://github.com/Yatoo2018/webpack-chain/tree/zh-cmn-Hans 看一下 文档
-      config
-        .plugin('pruecss')
-        .use(PurgecssPlugin)
-        .tap(() => ({
-          paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true })
-        }))
       // gzip需要nginx进行配合
       config
         .plugin('compression')
@@ -183,6 +195,11 @@ module.exports = {
             deleteOriginalAssets: false // 是否删除源文件
           }
         ])
+      config.plugin('purecss').use(
+        new PurgecssPlugin({
+          paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true })
+        })
+      )
       config.optimization.minimizer([
         new UglifyjsWebpackPlugin({
           // 生产环境推荐关闭 sourcemap 防止源码泄漏
