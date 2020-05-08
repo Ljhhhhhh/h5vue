@@ -109,23 +109,20 @@ module.exports = {
         return options
       })
       .end()
+
+    // 图片压缩
     config.module
-      .rule('img')
-      .test(/\.(gif|png|jpe?g)$/i)
-      .use('file-loader')
+      .rule('images')
+      .use('image-webpack-loader')
       .loader('image-webpack-loader')
-      // .tap(options => {
-      //   options.query = {
-      //     progressive: true,
-      //     optimizationLevel: 7,
-      //     interlaced: false,
-      //     pngquant: {
-      //       quality: '65-90',
-      //       speed: 4
-      //     }
-      //   }
-      //   return options
-      // })
+      .options({
+        bypassOnDebug: true,
+        pngquant: {
+          quality: [0.75, 0.90],
+          speed: 5
+        }
+      })
+      .end()
 
     config
       // https://webpack.js.org/configuration/devtool/#development
@@ -175,6 +172,8 @@ module.exports = {
         args[0].minify.minifyCSS = true // 压缩html中的css
         return args
       })
+
+      // 多线程
       config.plugin('HappyPack').use(HappyPack, [
         {
           loaders: [
@@ -195,6 +194,8 @@ module.exports = {
             deleteOriginalAssets: false // 是否删除源文件
           }
         ])
+
+      // css Tree Thaking
       config.plugin('purecss').use(
         new PurgecssPlugin({
           paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true })
