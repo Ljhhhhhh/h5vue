@@ -1,4 +1,4 @@
-import defaultSettings from '@/settings.ts'
+import defaultSettings from '@/settings'
 
 const title = defaultSettings.title || 'H5Vue'
 

@@ -10,7 +10,7 @@
               v-for="article in list"
               :key="article.id">
             <div class="left">
-              <img v-lazy="article.imageUri"
+              <img v-lazy="article.imageURL"
                    alt="thumb" />
             </div>
             <div class="right">

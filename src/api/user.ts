@@ -1,6 +1,6 @@
 import request from "@/utils/request.ts";
 
-export function login(data) {
+export function login(data: any) {
   return request({
     url: "/users/login",
     method: "post",
@@ -12,7 +12,6 @@ export function getInfo() {
   return request({
     url: "/users/info",
     method: "post"
-    // data: { token }
   });
 }
 

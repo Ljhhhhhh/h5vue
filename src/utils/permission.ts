@@ -31,7 +31,10 @@ router.beforeEach(async (to, from, next) => {
         } catch (error) {
           // 清除用户信息，退出登录，跳转登录页
           UserModule.ResetToken()
-          Notify.error(error || 'Has Error')
+          Notify({
+            message: error || 'Has Error',
+            type: 'danger'
+          })
           next(`/login?redirect=${to.path}`)
         }
       }

@@ -4,21 +4,30 @@
       <keep-alive v-if="$route.meta.keepAlive">
         <router-view class="router"></router-view>
       </keep-alive>
-      <router-view class="router" v-else></router-view>
+      <router-view class="router"
+                   v-else></router-view>
     </transition>
+    <service-worker-update-popup />
   </div>
 </template>
 <script>
-import defaultSetting from './settings.ts'
-export default {
-  name: 'app',
-  computed: {
-    transitionName () {
-      if (defaultSetting.needPageTrans) {
-        return this.$store.state.direction
-      }
-      return ''
+import { Component, Vue } from 'vue-property-decorator'
+import defaultSetting from '@/settings'
+import ServiceWorkerUpdatePopup from '@/pwa/components/ServiceWorkerUpdatePopup.vue'
+
+
+@Component({
+  name: 'App',
+  components: {
+    ServiceWorkerUpdatePopup
+  }
+})
+export default class extends Vue {
+  get transitionName () {
+    if (defaultSetting.needPageTrans) {
+      return this.$store.state.app.direction
     }
+    return ''
   }
 }
 </script>
@@ -45,6 +54,5 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
-  // background-color: #fff;
 }
 </style>

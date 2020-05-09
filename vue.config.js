@@ -71,7 +71,7 @@ module.exports = {
     // it can be accessed in index.html to inject the correct title.
     name: name,
     resolve: {
-      extensions: ['vue', '.ts', '.js'],
+      extensions: ['.vue', '.ts', '.js'],
       alias: {
         '@': resolve('src'), // 主目录
         'views': resolve('src/views'), // 页面

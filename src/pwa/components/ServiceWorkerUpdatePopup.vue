@@ -32,21 +32,21 @@ export default class extends Vue {
     // Store the ServiceWorkerRegistration instance for later use.
     const h = this.$createElement
     this.registration = (e as CustomEvent).detail
-    this.$notify.info({
-      title: 'Update available',
-      message: h('div', { class: 'sw-update-popup' }, [
-        this.notificationText,
-        h('br'),
-        h('button', {
-          on: {
-            click: (e: Event) => {
-              e.preventDefault()
-              this.refreshApp()
-            }
-          }
-        }, this.refreshButtonText)
-      ]),
-      position: 'bottom-right',
+    this.$notify({
+      type: 'primary',
+      message: 'New content is available!',
+      // message: h('div', { class: 'sw-update-popup' }, [
+      //   this.notificationText,
+      //   h('br'),
+      //   h('button', {
+      //     on: {
+      //       click: (e: Event) => {
+      //         e.preventDefault()
+      //         this.refreshApp()
+      //       }
+      //     }
+      //   }, this.refreshButtonText)
+      // ]),
       duration: 0
     })
   }

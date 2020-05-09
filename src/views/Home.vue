@@ -11,13 +11,13 @@
     <div class="now-value">
       <span>当前数值{{number}}</span>
       <div>
-        <!-- <van-button type="info"
-                    @click="add"
+        <van-button type="info"
+                    @click="addAsync"
                     :loading="loading"
                     size="small">异步+1</van-button>
         <van-button type="primary"
                     size="small"
-                    @click="addOne">+1</van-button> -->
+                    @click="addOne">+1</van-button>
       </div>
     </div>
     <div class="icon-list">
@@ -53,6 +53,7 @@ import { UserModule } from '../store/modules/user';
     [SwipeItem.name]: SwipeItem,
   }
 })
+
 export default class extends Vue {
   private value = 1;
   private images = [
@@ -78,10 +79,23 @@ export default class extends Vue {
     return NumberModule.number
   }
 
+  get loading() {
+    return this.$store.state['@@loading'].effects.onePlusAsync
+  }
+
   private async logout() {
     await UserModule.LogOut()
     this.$router.push(`/login?redirect=${this.$route.fullPath}`)
   }
+
+  private addOne () {
+    NumberModule.onePlus()
+  }
+
+  private addAsync() {
+    NumberModule.onePlusAsync()
+  }
+  
 }
 </script>
 

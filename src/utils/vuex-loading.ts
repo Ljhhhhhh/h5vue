@@ -1,3 +1,7 @@
+import Vuex, { Store } from 'vuex';
+import { VuexModule } from 'vuex-module-decorators'
+
+
 // 相关文档 https://vuex.vuejs.org/zh/api/#subscribeaction
 const NAMESPACE = '@@loading'
 
@@ -6,7 +10,7 @@ const createLoadingPlugin = ({
   includes = [],
   excludes = []
 } = {}) => {
-  return store => {
+  return (store: any) => {
     if (store.state[namespace]) {
       throw new Error(
         `createLoadingPlugin: ${namespace} exited in current store`
@@ -22,14 +26,14 @@ const createLoadingPlugin = ({
         }
       },
       mutations: {
-        SHOW (state, { payload }) {
+        SHOW (state: any, { payload }: any) {
           state.global = true
           state.effects = {
             ...state.effects,
             [payload]: true
           }
         },
-        HIDE (state, { payload }) {
+        HIDE (state: any, { payload }: any) {
           state.global = false
           state.effects = {
             ...state.effects,
@@ -40,13 +44,13 @@ const createLoadingPlugin = ({
     })
 
     store.subscribeAction({
-      before: action => {
+      before: (action: any) => {
         console.log(`before action ${action.type}`)
         if (shouldEffect(action, includes, excludes)) {
           store.commit({ type: namespace + '/SHOW', payload: action.type })
         }
       },
-      after: action => {
+      after: (action: any) => {
         console.log(`after action ${action.type}`)
         if (shouldEffect(action, includes, excludes)) {
           store.commit({ type: namespace + '/HIDE', payload: action.type })
@@ -56,7 +60,7 @@ const createLoadingPlugin = ({
   }
 }
 
-function shouldEffect ({ type }, includes, excludes) {
+function shouldEffect ({ type }: any, includes: Array<string>, excludes: Array<string>) {
   if (includes.length === 0 && excludes.length === 0) {
     return true
   }
@@ -69,14 +73,3 @@ function shouldEffect ({ type }, includes, excludes) {
 }
 
 export default createLoadingPlugin
-// 需要在vuex中引入并注册成插件：
-/**
-import createLoadingPlugin from 'utils/vuex-loading'
-export default new Vuex.Store({
-  plugins: [createLoadingPlugin()],
-  state: {
-    // loading: false,
-    direction: 'forward'
-  }
-})
-**/

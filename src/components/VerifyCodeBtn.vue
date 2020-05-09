@@ -7,46 +7,38 @@
     {{codeRestTime ? `${codeRestTime}S` : '发送验证码'}}
   </van-button>
 </template>
-<script>
-import { Button } from 'vant'
-export default {
-  name: 'VerifyCodeBtn',
+<script lang="ts">
+import { Component, Prop, Emit, Vue } from "vue-property-decorator";
+import { Button } from "vant";
+
+@Component({
+  name: "VerifyCodeBtn",
   components: {
     [Button.name]: Button
-  },
-  props: {
-    btnMsg: {
-      type: String,
-      default: '发送验证码'
-    },
-    restTime: {
-      type: Number,
-      default: 30
-    }
-  },
-  data () {
-    return {
-      codeRestTime: 0
-    }
-  },
-  methods: {
-    btnClick () {
-      this.codeRestTime = this.restTime
-      let timer = setInterval(() => {
-        --this.codeRestTime
-        if (!this.codeRestTime) {
-          clearInterval(timer)
-          timer = null
-        }
-      }, 1000)
-      this.$emit('sendVerifyCode')
-    }
   }
+})
+export default class extends Vue {
+  @Prop({ default: "发送验证码" }) private btnMsg!: string;
+  @Prop({ default: 30 }) private restTime!: number;
+
+  private codeRestTime = 0;
+
+  @Emit("sendVerifyCode")
+  private btnClick() {
+    this.codeRestTime = this.restTime;
+    let timer: number = setInterval(() => {
+      --this.codeRestTime;
+      if (!this.codeRestTime) {
+        clearInterval(timer);
+      }
+    }, 1000);
+  }
+  
 }
 </script>
 <style lang="scss" scoped>
-.verify-btn{
-    padding: 0 5px;
-    min-width: 6.5em;
-  }
+.verify-btn {
+  padding: 0 5px;
+  min-width: 6.5em;
+}
 </style>

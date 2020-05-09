@@ -10,13 +10,17 @@
   </van-tabbar>
 
 </template>
-<script>
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
 import { Tabbar, TabbarItem } from 'vant'
-export default {
+
+@Component({
   name: 'FooterTabbar',
   components: {
     [Tabbar.name]: Tabbar,
     [TabbarItem.name]: TabbarItem
   }
+})
+export default class extends Vue {
 }
 </script>
