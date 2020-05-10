@@ -41,7 +41,7 @@
     "@types/faker": "^4.1.11",
     "@types/js-cookie": "^2.2.4",
     "@types/morgan": "^1.7.37",
-    "@types/node": "^12.12.31",
+    "@types/node": "^13.13.5",
     "@types/webpack-env": "^1.15.1",
     "@types/yamljs": "^0.2.30",
     "@vue/cli-plugin-babel": "~4.2.3",

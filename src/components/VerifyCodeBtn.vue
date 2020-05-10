@@ -26,7 +26,7 @@ export default class extends Vue {
   @Emit("sendVerifyCode")
   private btnClick() {
     this.codeRestTime = this.restTime;
-    let timer: number = setInterval(() => {
+    let timer = setInterval(() => {
       --this.codeRestTime;
       if (!this.codeRestTime) {
         clearInterval(timer);

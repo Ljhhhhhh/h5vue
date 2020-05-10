@@ -43,7 +43,7 @@ import { Button, Tabbar, TabbarItem, Swipe, SwipeItem } from 'vant'
 import { UserModule } from '../store/modules/user';
 
 @Component({
-  name: "home",
+  name: "ome",
   components: {
     FooterTabbar,
     [Button.name]: Button,

@@ -34,6 +34,7 @@ function resolve (dir) {
 const mockServerPort = 9528 // TODO: get this variable from setting.ts
 
 module.exports = {
+  // parallel: false,
   publicPath: IS_PRODUCTION ? cdnDomian : './',
   outputDir: 'dist',
   assetsDir: 'static',
@@ -144,7 +145,7 @@ module.exports = {
           compilerOptions: {
             module: 'es2015'
           }
-        })
+        });
         return options;
       })
       .tap(options => {

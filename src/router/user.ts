@@ -1,7 +1,7 @@
 export default [
   {
     path: '/login',
-    name: 'login',
+    name: 'Login',
     component: () => import(/* webpackChunkName: "login" */ 'views/user/Login.vue'),
     meta: {
       title: '登录'
@@ -9,7 +9,7 @@ export default [
   },
   {
     path: '/register',
-    name: 'register',
+    name: 'Register',
     component: () => import(/* webpackChunkName: "register" */ 'views/user/Register.vue'),
     meta: {
       title: '注册'

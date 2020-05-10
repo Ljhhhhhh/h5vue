@@ -1,7 +1,7 @@
 export default [
   {
     path: '/article',
-    name: 'article',
+    name: 'Article',
     component: () => import(/* webpackChunkName: "article" */ 'views/Article.vue'),
     meta: {
       auth: true,

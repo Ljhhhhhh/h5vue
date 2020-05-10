@@ -2,7 +2,7 @@
   // 编译选项
   "compilerOptions": {
     // 编译输出目标 ES 版本
-    "target": "es5",
+    "target": "esnext",
     // 采用的模块系统
     "module": "esnext",
     // 以严格模式解析
@@ -30,7 +30,8 @@
     // 给错误和消息设置样式，使用颜色和上下文。
     "pretty": true,
     // 设置引入的定义文件
-    "types": ["webpack-env"],
+    "types": ["webpack-env", "node"],
+    "typeRoots": [ "../node_modules/@types" ],
     // 指定特殊模块的路径
     "paths": {
       "@/*": ["src/*"],

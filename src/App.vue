@@ -10,11 +10,10 @@
     <service-worker-update-popup />
   </div>
 </template>
-<script>
+<script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import defaultSetting from '@/settings'
 import ServiceWorkerUpdatePopup from '@/pwa/components/ServiceWorkerUpdatePopup.vue'
-
 
 @Component({
   name: 'App',

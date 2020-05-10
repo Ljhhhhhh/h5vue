@@ -3,6 +3,7 @@ import 'lib-flexible'
 import App from './App.vue'
 import router from '@/router'
 import store from '@/store'
+import * as filters from '@/filters'
 import 'utils/permission'
 import SvgIcon from '@/components/SvgIcon.vue'
 import '@/icons' // icon
@@ -19,6 +20,11 @@ if (process.env.NODE_ENV === 'development' && defaultSettings.vconsole) {
   const VConsole = require('vconsole')
   new VConsole()
 }
+
+// 注册全局过滤器
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, (filters as { [key: string ]: Function })[key])
+})
 
 Vue.config.productionTip = false
 

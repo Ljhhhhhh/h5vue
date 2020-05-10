@@ -17,86 +17,76 @@
               <p>{{ article.title }}</p>
               <p class="more-info">
                 <span class="author">作者：{{ article.author }}</span>
-                <span class="time">发布时间：{{article.displayTimeFormart}}</span>
+                <span class="time">发布时间：{{article.timestamp | unixToDate}}</span>
               </p>
             </div>
           </li>
         </ul>
       </vo-pages>
     </div>
-    <footer-tabbar/>
+    <footer-tabbar />
   </div>
 </template>
-<script>
-import { Tabbar, TabbarItem } from 'vant'
-import { fetchList } from 'api/article'
-import dayjs from 'dayjs'
-import FooterTabbar from 'components/FooterTabbar'
-import VoPages from 'vo-pages'
-import 'vo-pages/lib/vo-pages.css'
-export default {
-  name: 'Article',
-  data () {
-    return {
-      active: 1,
-      list: [],
-      total: 0,
-      page: 1,
-      loadedAll: false
-    }
-  },
-  mounted () {
-    this.getList()
-  },
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import { fetchList } from "api/article";
+import dayjs from "dayjs";
+import FooterTabbar from "components/FooterTabbar.vue";
+import VoPages from "vo-pages";
+import "vo-pages/lib/vo-pages.css";
+import { IArticleData } from "api/types";
+
+@Component({
+  name: "Article",
   components: {
-    [Tabbar.name]: Tabbar,
-    [TabbarItem.name]: TabbarItem,
     VoPages,
     FooterTabbar
-  },
-  methods: {
-    pullingDown () {
-      this.beforePullDown = false
-      this.page = 1
-      this.getList(false)
-    },
-    pullingUp () {
-      this.page += 1
-      this.getList()
-    },
-    async getList (loadMore = true) {
-      const data = {
-        page: this.page
-      }
-      const result = await fetchList(data)
-      this.total = result.data.total
-      const newList = result.data.items.map(article => {
-        article.displayTimeFormart = dayjs(article.display_time).format('YYYY-MM-DD')
-        return article
-      })
-      if (loadMore) {
-        this.list = this.list.concat(newList)
-      } else {
-        this.list = newList
-      }
-      if (!this.beforePullDown) {
-        this.beforePullDown = true
-      }
-      this.loadedAll = this.total <= this.list.length
+  }
+})
+export default class extends Vue {
+  private list: Array<any> = [];
+  private total: number = 0;
+  private page: number = 1;
+  private loadedAll: boolean = false;
+
+  mounted() {
+    this.getList();
+  }
+
+  private pullingDown() {
+    this.page = 1;
+    this.getList(false);
+  }
+  private pullingUp() {
+    this.page += 1;
+    this.getList();
+  }
+  private async getList(loadMore = true) {
+    const data = {
+      page: this.page
+    };
+    const result = await fetchList(data);
+    this.total = result.data.total;
+    const newList = result.data.items;
+    if (loadMore) {
+      this.list = this.list.concat(newList);
+    } else {
+      this.list = newList;
     }
+    this.loadedAll = this.total <= this.list.length;
   }
 }
 </script>
 <style lang="scss" scoped>
-p{
+p {
   margin-block-start: 0;
   margin-block-end: 0;
 }
-.container{
+.container {
   height: 100%;
   width: 100%;
   background: #f5f5f5;
-  .list-wrap{
+  .list-wrap {
     height: calc(100% - 50px);
     overflow-y: hidden;
   }
@@ -115,7 +105,7 @@ p{
     margin-bottom: 20px;
     padding: 10px 15px;
     box-sizing: border-box;
-    background: #FFF;
+    background: #fff;
     border-radius: 5px;
     box-shadow: 0 0 6px #e3e3e3;
     .left {
@@ -145,7 +135,7 @@ p{
         white-space: nowrap;
         font-size: 16px;
       }
-      .more-info{
+      .more-info {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -155,5 +145,4 @@ p{
     }
   }
 }
-
 </style>

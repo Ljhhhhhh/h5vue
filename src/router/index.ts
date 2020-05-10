@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "views/Home.vue";
-import store from "@/store";
 import { AppModule } from "@/store/modules/app";
 
 Vue.use(Router);
@@ -9,7 +8,7 @@ Vue.use(Router);
 let routes = [
   {
     path: "/",
-    name: "home",
+    name: "Home",
     component: Home,
     meta: {
       title: "首页",
@@ -28,7 +27,7 @@ let routes = [
 ];
 
 const routerContext = require.context("./", true, /\.ts$/);
-routerContext.keys().forEach(route => {
+routerContext.keys().forEach((route: string) => {
   // 如果是根目录的 index.js 、不处理
   if (route.startsWith("./index")) {
     return;
@@ -40,11 +39,6 @@ routerContext.keys().forEach(route => {
   routes = routes.concat(routerModule.default || routerModule);
 });
 
-// routes = routes.concat({
-//   path: '*',
-//   redirect: '/404'
-// })
-
 const createRouter = () =>
   new Router({
     mode: "history", // require service support
@@ -54,12 +48,6 @@ const createRouter = () =>
   });
 
 const myRouter = createRouter();
-
-// const myRouter = new Router({
-//   mode: 'history',
-//   base: process.env.BASE_URL,
-//   routes
-// })
 
 const history = window.sessionStorage;
 history.clear();

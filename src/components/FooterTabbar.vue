@@ -22,5 +22,6 @@ import { Tabbar, TabbarItem } from 'vant'
   }
 })
 export default class extends Vue {
+  
 }
 </script>
