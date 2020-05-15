@@ -15,6 +15,7 @@
 import { Component, Watch, Vue } from "vue-property-decorator";
 import defaultSetting from "@/settings";
 import FooterTabbar from "components/FooterTabbar.vue";
+import { Route } from 'vue-router'
 
 @Component({
   name: "Layout",
@@ -27,7 +28,7 @@ export default class extends Vue {
   private transitionName = ''
   
   @Watch('$route')
-  private changeDir(to: any, from: any) {
+  private changeDir(to: Route, from: Route) {
     if (defaultSetting.layoutNeedPageTrans) {
       const toIndex = to.meta.tabIndex
       const fromIndex = from.meta.tabIndex
