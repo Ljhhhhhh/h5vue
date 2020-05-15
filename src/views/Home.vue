@@ -38,14 +38,12 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { NumberModule } from '@/store/modules/test'
-// import FooterTabbar from "@/components/FooterTabbar.vue";
 import { Button, Tabbar, TabbarItem, Swipe, SwipeItem } from 'vant'
 import { UserModule } from '../store/modules/user';
 
 @Component({
   name: "Home",
   components: {
-    // FooterTabbar,
     [Button.name]: Button,
     [Tabbar.name]: Tabbar,
     [TabbarItem.name]: TabbarItem,

@@ -31,7 +31,6 @@
 import { Component, Vue } from "vue-property-decorator";
 import { fetchList } from "api/article";
 import dayjs from "dayjs";
-// import FooterTabbar from "components/FooterTabbar.vue";
 import VoPages from "vo-pages";
 import "vo-pages/lib/vo-pages.css";
 import { IArticleData } from "api/types";
@@ -40,7 +39,6 @@ import { IArticleData } from "api/types";
   name: "Article",
   components: {
     VoPages,
-    // FooterTabbar
   }
 })
 export default class extends Vue {

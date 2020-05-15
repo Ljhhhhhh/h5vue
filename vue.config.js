@@ -1,7 +1,7 @@
 const path = require("path");
 const merge = require("webpack-merge");
 const CompressionWebpackPlugin = require("compression-webpack-plugin");
-const tsImportPluginFactory = require('ts-import-plugin');
+const tsImportPluginFactory = require("ts-import-plugin");
 const UglifyjsWebpackPlugin = require("uglifyjs-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const port = process.env.port || process.env.npm_config_port || 8888;
@@ -15,7 +15,7 @@ const cdn = {
     "https://cdn.bootcss.com/vue-router/3.0.3/vue-router.min.js",
     "https://cdn.bootcss.com/vuex/3.1.0/vuex.min.js",
     "https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js",
-    "https://cdn.bootcss.com/js-cookie/2.2.1/js.cookie.min.js"
+    "https://cdn.bootcss.com/js-cookie/2.2.1/js.cookie.min.js",
   ]
 };
 
@@ -24,7 +24,7 @@ const externals = {
   "vue-router": "VueRouter",
   vuex: "Vuex",
   axios: "axios",
-  "js-cookie": "Cookies"
+  "js-cookie": "Cookies",
 };
 
 function resolve(dir) {
@@ -50,8 +50,6 @@ module.exports = {
     },
     progress: false,
     proxy: {
-      // change xxx-api/login => mock/login
-      // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
         target: `http://localhost:${mockServerPort}/mock-api/v1`,
         changeOrigin: true,
@@ -60,7 +58,6 @@ module.exports = {
         }
       }
     }
-    // after: require('./mock/mock-server.ts')
   },
   pwa: {
     name: name,
@@ -70,8 +67,6 @@ module.exports = {
     }
   },
   configureWebpack: {
-    // provide the app's title in webpack's name field, so that
-    // it can be accessed in index.html to inject the correct title.
     name: name,
     resolve: {
       extensions: [".vue", ".ts", ".js"],
@@ -193,7 +188,7 @@ module.exports = {
         }
       });
       config.optimization.runtimeChunk("single");
-      config.stats('error-only')
+      config.stats("errors-only");
     });
     if (IS_PRODUCTION) {
       config.plugin("analyzer").use(BundleAnalyzerPlugin);
@@ -217,7 +212,7 @@ module.exports = {
             deleteOriginalAssets: false // 是否删除源文件
           }
         ]);
-      config.optimization.minimizer([
+      config.optimization.minimizer("minimizer").use(
         new UglifyjsWebpackPlugin({
           // 生产环境推荐关闭 sourcemap 防止源码泄漏
           // 服务端通过前端发送的行列，根据 sourcemap 转为源文件位置
@@ -230,7 +225,7 @@ module.exports = {
             }
           }
         })
-      ]);
+      );
     }
   },
   css: {
