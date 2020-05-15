@@ -12,7 +12,6 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    console.log(UserModule.token, 'token')
     if (UserModule.token) {
       config.headers['X-Token'] = UserModule.token //getToken()
     } else {

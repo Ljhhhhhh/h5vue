@@ -32,20 +32,20 @@
       <router-link to="/404">
         <svg-icon icon-class="404" />前往404页面</router-link>
     </div>
-    <footer-tabbar />
+    <!-- <footer-tabbar /> -->
   </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { NumberModule } from '@/store/modules/test'
-import FooterTabbar from "@/components/FooterTabbar.vue";
+// import FooterTabbar from "@/components/FooterTabbar.vue";
 import { Button, Tabbar, TabbarItem, Swipe, SwipeItem } from 'vant'
 import { UserModule } from '../store/modules/user';
 
 @Component({
-  name: "ome",
+  name: "Home",
   components: {
-    FooterTabbar,
+    // FooterTabbar,
     [Button.name]: Button,
     [Tabbar.name]: Tabbar,
     [TabbarItem.name]: TabbarItem,

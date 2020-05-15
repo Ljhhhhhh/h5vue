@@ -44,8 +44,9 @@ const options = {
 const connectSwagger = connector(api, apiDefinition, options)
 connectSwagger(app)
 // Print swagger router api summary
-const apiSummary = summarise(apiDefinition)
-console.log(apiSummary)
+// const apiSummary = 
+summarise(apiDefinition)
+// console.log(apiSummary)
 
 // Catch 404 error
 app.use((req, res, next) => {

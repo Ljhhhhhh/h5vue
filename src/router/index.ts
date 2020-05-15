@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "views/Home.vue";
+import Layout from "@/layout/index.vue";
 import { AppModule } from "@/store/modules/app";
 
 Vue.use(Router);
@@ -8,12 +9,33 @@ Vue.use(Router);
 let routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
-    meta: {
-      title: "首页",
-      keepAlive: true
-    }
+    component: Layout,
+    redirect: "/home",
+    children: [
+      {
+        path: "/home",
+        name: "Home",
+        component: Home,
+        meta: {
+          auth: true,
+          title: "首页",
+          keepAlive: true,
+          tabIndex: 1
+        }
+      },
+      {
+        path: "/article",
+        name: "Article",
+        component: () =>
+          import(/* webpackChunkName: "article" */ "views/Article.vue"),
+        meta: {
+          auth: true,
+          title: "文章",
+          keepAlive: true,
+          tabIndex: 2
+        }
+      }
+    ]
   },
   {
     path: "/404",

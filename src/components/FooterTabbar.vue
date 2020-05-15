@@ -3,7 +3,7 @@
               :safe-area-inset-bottom="true">
     <van-tabbar-item icon="home-o"
                      replace
-                     to="/">首页</van-tabbar-item>
+                     to="/home">首页</van-tabbar-item>
     <van-tabbar-item icon="orders-o"
                      replace
                      to="/article">文章</van-tabbar-item>

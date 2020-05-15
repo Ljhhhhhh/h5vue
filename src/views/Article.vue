@@ -24,14 +24,14 @@
         </ul>
       </vo-pages>
     </div>
-    <footer-tabbar />
+    <!-- <footer-tabbar /> -->
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { fetchList } from "api/article";
 import dayjs from "dayjs";
-import FooterTabbar from "components/FooterTabbar.vue";
+// import FooterTabbar from "components/FooterTabbar.vue";
 import VoPages from "vo-pages";
 import "vo-pages/lib/vo-pages.css";
 import { IArticleData } from "api/types";
@@ -40,7 +40,7 @@ import { IArticleData } from "api/types";
   name: "Article",
   components: {
     VoPages,
-    FooterTabbar
+    // FooterTabbar
   }
 })
 export default class extends Vue {
@@ -87,7 +87,7 @@ p {
   width: 100%;
   background: #f5f5f5;
   .list-wrap {
-    height: calc(100% - 50px);
+    height: 100%;
     overflow-y: hidden;
   }
 }

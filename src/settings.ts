@@ -1,13 +1,15 @@
 interface ISettings {
   title: string
   vconsole: boolean
-  needPageTrans: boolean
+  needPageTrans: boolean,
+  layoutNeedPageTrans: boolean,
 }
 
 const settings: ISettings = {
   title: 'H5Vue',
   vconsole: false,
-  needPageTrans: true
+  needPageTrans: true,
+  layoutNeedPageTrans: true
 }
 
 export default settings
