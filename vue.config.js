@@ -4,7 +4,8 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin')
 const HappyPack = require('happypack')
 const PurgecssPlugin = require('purgecss-webpack-plugin')
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const port = process.env.port || process.env.npm_config_port || 8888
 const cdnDomian = './' // cdn域名，如果有cdn修改成对应的cdn
 const name = 'H5Vue' // page title
@@ -31,6 +32,9 @@ const externals = {
 const PATHS = {
   src: path.join(__dirname, 'src')
 }
+
+// 记录打包速度
+const smp = new SpeedMeasurePlugin()
 
 function resolve (dir) {
   return path.join(__dirname, dir)
@@ -62,7 +66,7 @@ module.exports = {
     },
     after: require('./mock/mock-server.js')
   },
-  configureWebpack: {
+  configureWebpack: smp.wrap({
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
     name: name,
@@ -77,7 +81,7 @@ module.exports = {
         style: resolve('src/style') // 通用样式
       }
     }
-  },
+  }),
   chainWebpack (config) {
     config.plugins.delete('preload') // TODO: need test
     config.plugins.delete('prefetch') // TODO: need test
@@ -111,18 +115,18 @@ module.exports = {
       .end()
 
     // 图片压缩
-    config.module
-      .rule('images')
-      .use('image-webpack-loader')
-      .loader('image-webpack-loader')
-      .options({
-        bypassOnDebug: true,
-        pngquant: {
-          quality: [0.75, 0.90],
-          speed: 5
-        }
-      })
-      .end()
+    // config.module
+    //   .rule('images')
+    //   .use('image-webpack-loader')
+    //   .loader('image-webpack-loader')
+    //   .options({
+    //     bypassOnDebug: true,
+    //     pngquant: {
+    //       quality: [0.75, 0.90],
+    //       speed: 5
+    //     }
+    //   })
+    //   .end()
 
     config
       // https://webpack.js.org/configuration/devtool/#development
@@ -162,7 +166,7 @@ module.exports = {
       config.optimization.runtimeChunk('single')
     })
     if (IS_PRODUCTION) {
-      // config.plugin('analyzer').use(BundleAnalyzerPlugin)
+      config.plugin('analyzer').use(BundleAnalyzerPlugin)
       config.plugin('html').tap(args => {
         args[0].cdn = cdn
         return args
