@@ -32,6 +32,7 @@
       <router-link to="/404">
         <svg-icon icon-class="404" />前往404页面</router-link>
     </div>
+    <img :src="img">
     <footer-tabbar />
   </div>
 </template>
@@ -40,12 +41,14 @@
 import { Button, Tabbar, TabbarItem, Swipe, SwipeItem } from 'vant'
 import { mapActions, mapMutations, mapState } from 'vuex' // createNamespacedHelpers
 import FooterTabbar from 'components/FooterTabbar'
+import img from 'assets/webpack.png'
 // const { mapActions } = createNamespacedHelpers('test') // 可使用这种方式直接获得test模板
 
 export default {
   name: 'home',
   data () {
     return {
+      img,
       value: 1,
       images: [
         'https://img.yzcdn.cn/vant/apple-1.jpg',
