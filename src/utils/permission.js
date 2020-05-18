@@ -6,7 +6,7 @@ import getPageTitle from '@/utils/get-page-title'
 
 const whiteList = ['/login', '/register'] // 白名单列表
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async(to, from, next) => {
   // 设置页面标题
   document.title = getPageTitle(to.meta.title)
 
@@ -23,16 +23,20 @@ router.beforeEach(async (to, from, next) => {
       if (hasGetUserInfo) {
         next()
       } else {
-        try {
-          // get user info
-          await store.dispatch('user/getInfo')
-          next()
-        } catch (error) {
-          // 清除用户信息，退出登录，跳转登录页
-          store.commit('user/LOGOUT')
-          Notify.error(error || 'Has Error')
-          next(`/login?redirect=${to.path}`)
-        }
+        // get user info
+        store
+          .dispatch('user/getInfo')
+          .then(() => {
+            next()
+          })
+          .catch(err => {
+            // 清除用户信息，退出登录，跳转登录页
+            store.commit('user/LOGOUT')
+            Notify({
+              type: 'danger',
+              message: err.toString() || 'Has Error'
+            })
+          })
       }
     }
   } else {
