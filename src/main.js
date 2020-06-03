@@ -3,7 +3,6 @@ import 'lib-flexible'
 import App from './App.vue'
 import router from '@/router'
 import store from '@/store'
-import FastClick from 'fastclick'
 import 'utils/permission'
 import SvgIcon from 'components/SvgIcon'
 import '@/icons' // icon
@@ -24,8 +23,6 @@ import { mockXHR } from '../mock'
 if (process.env.NODE_ENV === 'production') {
   mockXHR()
 }
-
-FastClick.attach(document.body)
 
 // options 为可选参数，无则不传
 Vue.use(Lazyload)

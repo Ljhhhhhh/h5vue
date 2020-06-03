@@ -58,3 +58,10 @@ $--transition-time: 300ms;
   transform: translate3d(-50%, 0, 0) !important;
   transition: transform $--transition-time;
 }
+
+.aabbccddee {
+  display: flex;
+  width: 200px;
+  height: 200px;
+  background: red;
+}

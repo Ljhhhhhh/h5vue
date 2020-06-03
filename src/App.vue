@@ -47,4 +47,10 @@ export default {
   left: 0;
   // background-color: #fff;
 }
+
+.dis {
+  display: flex;
+  width: 200px;
+  height: 200px;
+}
 </style>

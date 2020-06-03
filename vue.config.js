@@ -1,6 +1,10 @@
 const path = require('path')
+const glob = require('glob')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin')
+const HappyPack = require('happypack')
+const PurgecssPlugin = require('purgecss-webpack-plugin')
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const port = process.env.port || process.env.npm_config_port || 8888
 const cdnDomian = './' // cdn域名，如果有cdn修改成对应的cdn
@@ -24,6 +28,13 @@ const externals = {
   axios: 'axios',
   'js-cookie': 'Cookies'
 }
+
+const PATHS = {
+  src: path.join(__dirname, 'src')
+}
+
+// 记录打包速度
+const smp = new SpeedMeasurePlugin()
 
 function resolve (dir) {
   return path.join(__dirname, dir)
@@ -56,22 +67,22 @@ module.exports = {
     },
     after: require('./mock/mock-server.js')
   },
-  configureWebpack: {
+  configureWebpack: smp.wrap({
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
     name: name,
     resolve: {
       alias: {
         '@': resolve('src'), // 主目录
-        'views': resolve('src/views'), // 页面
-        'components': resolve('src/components'), // 组件
-        'api': resolve('src/api'), // 接口
-        'utils': resolve('src/utils'), // 通用功能
-        'assets': resolve('src/assets'), // 静态资源
-        'style': resolve('src/style') // 通用样式
+        views: resolve('src/views'), // 页面
+        components: resolve('src/components'), // 组件
+        api: resolve('src/api'), // 接口
+        utils: resolve('src/utils'), // 通用功能
+        assets: resolve('src/assets'), // 静态资源
+        style: resolve('src/style') // 通用样式
       }
     }
-  },
+  }),
   chainWebpack (config) {
     config.plugins.delete('preload') // TODO: need test
     config.plugins.delete('prefetch') // TODO: need test
@@ -104,46 +115,58 @@ module.exports = {
       })
       .end()
 
-    config
-    // https://webpack.js.org/configuration/devtool/#development
-      .when(process.env.NODE_ENV === 'development',
-        config => config.devtool('cheap-source-map')
-      )
+    // 图片压缩
+    // config.module
+    //   .rule('images')
+    //   .use('image-webpack-loader')
+    //   .loader('image-webpack-loader')
+    //   .options({
+    //     bypassOnDebug: true,
+    //     pngquant: {
+    //       quality: [0.75, 0.90],
+    //       speed: 5
+    //     }
+    //   })
+    //   .end()
 
     config
-      .when(process.env.NODE_ENV !== 'development',
-        config => {
-          config
-            .plugin('ScriptExtHtmlWebpackPlugin')
-            .after('html')
-            .use('script-ext-html-webpack-plugin', [{
-            // `runtime` must same as runtimeChunk name. default is `runtime`
-              inline: /runtime\..*\.js$/
-            }])
-            .end()
-          config
-            .optimization.splitChunks({
-              chunks: 'all',
-              cacheGroups: {
-                libs: {
-                  name: 'chunk-libs',
-                  test: /[\\/]node_modules[\\/]/,
-                  priority: 10,
-                  chunks: 'initial' // only package third parties that are initially dependent
-                },
-                commons: {
-                  name: 'chunk-commons',
-                  test: resolve('src/components'), // can customize your rules
-                  minChunks: 3, //  minimum common number
-                  priority: 5,
-                  reuseExistingChunk: true
-                }
-              }
-            })
-          config.optimization.runtimeChunk('single')
-        }
+      // https://webpack.js.org/configuration/devtool/#development
+      .when(process.env.NODE_ENV === 'development', config =>
+        config.devtool('cheap-source-map')
       )
-    if (!IS_PRODUCTION) {
+
+    config.when(process.env.NODE_ENV !== 'development', config => {
+      config
+        .plugin('ScriptExtHtmlWebpackPlugin')
+        .after('html')
+        .use('script-ext-html-webpack-plugin', [
+          {
+            // `runtime` must same as runtimeChunk name. default is `runtime`
+            inline: /runtime\..*\.js$/
+          }
+        ])
+        .end()
+      config.optimization.splitChunks({
+        chunks: 'all',
+        cacheGroups: {
+          libs: {
+            name: 'chunk-libs',
+            test: /[\\/]node_modules[\\/]/,
+            priority: 10,
+            chunks: 'initial' // only package third parties that are initially dependent
+          },
+          commons: {
+            name: 'chunk-commons',
+            test: resolve('src/components'), // can customize your rules
+            minChunks: 3, //  minimum common number
+            priority: 5,
+            reuseExistingChunk: true
+          }
+        }
+      })
+      config.optimization.runtimeChunk('single')
+    })
+    if (IS_PRODUCTION) {
       config.plugin('analyzer').use(BundleAnalyzerPlugin)
     }
     if (IS_PRODUCTION) {
@@ -157,6 +180,17 @@ module.exports = {
         args[0].minify.minifyCSS = true // 压缩html中的css
         return args
       })
+
+      // 多线程
+      config.plugin('HappyPack').use(HappyPack, [
+        {
+          loaders: [
+            {
+              loader: 'babel-loader?cacheDirectory=true'
+            }
+          ]
+        }
+      ])
       // gzip需要nginx进行配合
       config
         .plugin('compression')
@@ -168,6 +202,13 @@ module.exports = {
             deleteOriginalAssets: false // 是否删除源文件
           }
         ])
+
+      // css Tree Thaking
+      config.plugin('purecss').use(
+        new PurgecssPlugin({
+          paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true })
+        })
+      )
       config.optimization.minimizer([
         new UglifyjsWebpackPlugin({
           // 生产环境推荐关闭 sourcemap 防止源码泄漏
@@ -194,7 +235,8 @@ module.exports = {
     modules: false,
     loaderOptions: {
       sass: {
-        data: '@import "style/_mixin.scss";@import "style/_variables.scss";@import "style/common.scss";' // 全局引入
+        data:
+          '@import "style/_mixin.scss";@import "style/_variables.scss";@import "style/common.scss";' // 全局引入
       }
     }
   }
