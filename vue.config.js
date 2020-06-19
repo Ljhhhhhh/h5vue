@@ -199,12 +199,13 @@ module.exports = {
           }
         ])
 
-      // css Tree Thaking
-      config.plugin('purecss').use(
-        new PurgecssPlugin({
-          paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true })
-        })
-      )
+      // css Tree Thaking TODO:: 发现build之后导致样式消失
+      // config.plugin('purecss').use(
+      //   new PurgecssPlugin({
+      //     paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true })
+      //   })
+      // )
+      
       config.optimization.minimizer([
         new UglifyjsWebpackPlugin({
           // 生产环境推荐关闭 sourcemap 防止源码泄漏
