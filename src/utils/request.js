@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Toast } from 'vant'
+import { Toast,Dialog } from 'vant'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
@@ -46,14 +46,13 @@ service.interceptors.response.use(
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
         // to re-login
-        Toast.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
+         Dialog.confirm({
+          title: 'You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout',
           confirmButtonText: 'Re-Login',
           cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
-          store.dispatch('user/resetToken').then(() => {
-            location.reload()
-          })
+          store.commit('user/LOGOUT')
         })
       }
       return Promise.reject(new Error(res.message || 'Error'))
