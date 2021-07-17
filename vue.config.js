@@ -49,6 +49,7 @@ module.exports = {
   devServer: {
     port: port,
     open: true,
+    disableHostCheck: process.env.NODE_ENV === 'development',
     overlay: {
       warnings: false,
       errors: true
@@ -167,6 +168,9 @@ module.exports = {
     })
     if (IS_PRODUCTION) {
       config.plugin('analyzer').use(BundleAnalyzerPlugin)
+    }
+    if (IS_PRODUCTION) {
+      // config.plugin('analyzer').use(BundleAnalyzerPlugin)
       config.plugin('html').tap(args => {
         args[0].cdn = cdn
         return args
